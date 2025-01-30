@@ -1,0 +1,31 @@
+{
+  "name": "pizzerianodejs",
+  "version": "1.0.0",
+  "description": "Sistema básico de una pizzería utilizando node, expressjs, jwt, cookies y mongodb",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BruninAlv61/pizzeriaNodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/BruninAlv61/pizzeriaNodejs/issues"
+  },
+  "homepage": "https://github.com/BruninAlv61/pizzeriaNodejs#readme",
+  "dependencies": {
+    "cors": "2.8.5",
+    "express": "4.21.2"
+  },
+  "devDependencies": {
+    "standard": "17.1.2"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  }
+}
