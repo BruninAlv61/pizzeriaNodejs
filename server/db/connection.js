@@ -27,3 +27,14 @@ export async function connect () {
     await client.close()
   }
 }
+
+export async function connectUser () {
+  try {
+    await client.connect()
+    console.log('✅ Conexión exitosa a MongoDB Atlas')
+    return client.db('pizzasDB').collection('users') // Usa el nombre correcto de la DB y colección
+  } catch (error) {
+    console.error('❌ Error conectando a MongoDB:', error)
+    await client.close()
+  }
+}
