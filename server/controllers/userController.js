@@ -1,4 +1,5 @@
 import { userSchema } from '../schemas/user.js'
+import { setAuthCookie } from '../jwt/auth.js'
 
 export class UserController {
   constructor ({ userModel }) {
@@ -11,11 +12,15 @@ export class UserController {
       return res.status(400).json(result.error)
     }
 
-    const newUser = await this.userModel.login({ input: result.data })
-    if (!newUser) {
-      return res.status(404).json({ message: 'Usuario no encontrado' })
+    const user = await this.userModel.login({ input: result.data })
+    if (!user) {
+      return res.status(401).json({ message: 'Usuario o contraseña incorrecta' })
     }
-    res.json(newUser)
+
+    // 🔐 Generar token y guardarlo en la cookie
+    setAuthCookie(res, { id: user._id, username: user.username })
+
+    res.redirect('/admin-panel')
   }
 
   register = async (req, res) => {
@@ -25,6 +30,14 @@ export class UserController {
     }
 
     const newUser = await this.userModel.register({ input: result.data })
-    res.json(newUser)
+
+    if (!newUser) {
+      return res.status(400).json({ message: 'El usuario ya existe' }) // ✅ Evita que avance
+    }
+
+    // 🔐 Generar token para el nuevo usuario
+    setAuthCookie(res, { id: newUser.id, username: newUser.user })
+
+    res.redirect('/admin-panel')
   }
 }

@@ -6,10 +6,13 @@ import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { PORT } from './config.js'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import { tokenVerify } from './middlewares/token-verify.js'
 
 import menuRoutes from './routes/menu.routes.js'
 import loginRoutes from './routes/login.routes.js'
 import registerRoutes from './routes/register.routes.js'
+import logoutRoutes from './routes/logout.routes.js'
 
 dotenv.config()
 
@@ -20,6 +23,8 @@ app.use(express.json())
 app.use(cors())
 app.use(morgan('dev'))
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
+app.use(tokenVerify)
 
 // Configurations
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -37,6 +42,15 @@ app.set('view engine', '.hbs')
 app.use('/menu', menuRoutes)
 app.use('/login', loginRoutes)
 app.use('/register', registerRoutes)
+app.use('/logout', logoutRoutes)
+
+app.get('/admin-panel', (req, res) => {
+  const { user } = req.session
+  if (!user) {
+    return res.redirect('/login')
+  }
+  res.render('admin-panel/admin-panel', { user })
+})
 
 // Public files
 app.use(express.static(join(__dirname, 'public')))
