@@ -1,0 +1,13 @@
+<h1>Agregando comida</h1>
+<form action="/menu" method="POST">
+    <input type="text" name="nombreProducto" placeholder="nombre del producto">
+    <select name="categoria">
+        <option value="pizza">Pizzas</option>
+        <option value="hamburguesa">Hamburguesas</option>
+        <option value="bebida">Bebidas</option>
+        <option value="postre">Postres</option>
+    </select>
+    <input type="number" name="precio" placeholder="precio" step="0.01" required>
+    <input type="text" name="imagen" placeholder="url imagen">
+    <button type="submit">Enviar</button>
+</form>

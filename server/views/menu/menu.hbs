@@ -1,0 +1,18 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/menu.css">
+{{/contentFor}}
+
+<h1>Carta Menú</h1>
+
+<a href="/menu/menu-add">Agregar comida</a>
+
+<div class="menu-container">
+    {{#each productos}}
+        <div class="menu-item">
+            <h4>{{nombreProducto}}</h4>
+            {{!--<p>{{categoria}}</p>--}}
+            <p>${{precio}}</p>
+            <img src="{{imagen}}" alt="">
+        </div>
+    {{/each}}
+</div>

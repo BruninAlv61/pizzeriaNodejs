@@ -33,7 +33,14 @@ app.engine('.hbs', engine({
   defaultLayout: 'main',
   layoutDir: join(app.get('views'), 'layouts'),
   partialsDir: join(app.get('views'), 'partials'),
-  extname: '.hbs'
+  extname: '.hbs',
+  helpers: {
+    contentFor: function (name, options) {
+      if (!this._sections) this._sections = {}
+      this._sections[name] = options.fn(this)
+      return null
+    }
+  }
 }))
 
 app.set('view engine', '.hbs')

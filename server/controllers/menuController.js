@@ -8,7 +8,7 @@ export class MenuController {
   getAll = async (req, res) => {
     const { categoria } = req.query
     const productos = await this.menuModel.getAll({ categoria })
-    res.json(productos)
+    res.render('menu/menu.hbs', { productos })
   }
 
   getById = async (req, res) => {
@@ -25,8 +25,8 @@ export class MenuController {
       return res.status(400).json({ error: result.error.format() })
     }
 
-    const nuevoProducto = await this.menuModel.create({ input: result.data })
-    res.status(201).json(nuevoProducto)
+    await this.menuModel.create({ input: result.data })
+    res.redirect('/menu')
   }
 
   delete = async (req, res) => {

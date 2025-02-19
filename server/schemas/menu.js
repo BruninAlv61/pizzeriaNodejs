@@ -5,7 +5,12 @@ export const menuSchema = z.object({
   categoria: z.enum(['pizza', 'hamburguesa', 'bebida', 'postre'], {
     errorMap: () => ({ message: 'Categoría inválida' })
   }),
-  precio: z.number().min(0, 'El precio debe ser un número positivo'),
+  precio: z.union([
+    z.string().transform((val) => Number(val)), // 🔥 Si viene como string, lo convierte a número
+    z.number() // 🔥 Si ya es un número, lo acepta
+  ]).refine((val) => !isNaN(val) && val >= 0, {
+    message: 'El precio debe ser un número positivo'
+  }),
   imagen: z.string().url('Debe ser una URL válida de imagen')
 })
 
