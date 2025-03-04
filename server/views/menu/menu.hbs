@@ -13,6 +13,22 @@
             {{!--<p>{{categoria}}</p>--}}
             <p>${{precio}}</p>
             <img src="{{imagen}}" alt="">
+            <button onclick="eliminarProducto('{{_id}}')">Eliminar</button>
+            <a href="/menu/edit/{{_id}}">Editar</a>
         </div>
     {{/each}}
 </div>
+
+<script>
+  async function eliminarProducto(id) {
+    const confirmar = confirm("¿Seguro que quieres eliminar este producto?");
+    if (confirmar) {
+      const res = await fetch(`/menu/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        location.reload(); // Recargar la página para ver los cambios
+      } else {
+        alert("Hubo un error al eliminar el producto.");
+      }
+    }
+  }
+</script>

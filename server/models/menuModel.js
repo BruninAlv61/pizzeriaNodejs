@@ -20,6 +20,12 @@ export class MenuModel {
 
   static async getById ({ id }) {
     const db = await connect()
+
+    // Validar que el ID sea un ObjectId válido
+    if (!ObjectId.isValid(id)) {
+      throw new Error('El ID proporcionado no es válido')
+    }
+
     const objectId = new ObjectId(id)
     return db.findOne({ _id: objectId })
   }

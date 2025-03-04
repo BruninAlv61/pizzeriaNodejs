@@ -39,7 +39,8 @@ app.engine('.hbs', engine({
       if (!this._sections) this._sections = {}
       this._sections[name] = options.fn(this)
       return null
-    }
+    },
+    eq: (a, b) => a === b
   }
 }))
 

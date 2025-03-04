@@ -12,10 +12,19 @@ export class MenuController {
   }
 
   getById = async (req, res) => {
-    const { id } = req.params
-    const producto = await this.menuModel.getById({ id })
-    if (producto) return res.json(producto)
-    res.status(404).json({ message: 'Producto no encontrado' })
+    try {
+      const { id } = req.params
+      const producto = await this.menuModel.getById({ id })
+
+      if (!producto) {
+        return res.status(404).json({ message: 'Producto no encontrado' })
+      }
+
+      res.json(producto)
+    } catch (error) {
+      console.error('Error en getById:', error.message)
+      return res.status(400).json({ message: 'ID inválido o formato incorrecto' })
+    }
   }
 
   create = async (req, res) => {
@@ -52,5 +61,16 @@ export class MenuController {
     const updatedProduct = await this.menuModel.update({ id, input: result.data })
 
     return res.json(updatedProduct)
+  }
+
+  renderEditForm = async (req, res) => {
+    const { id } = req.params
+    const producto = await this.menuModel.getById({ id })
+
+    if (!producto) {
+      return res.status(404).send('Producto no encontrado')
+    }
+
+    res.render('menu/menu-edit', { producto })
   }
 }

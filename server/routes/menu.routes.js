@@ -6,12 +6,17 @@ const router = express.Router()
 const menuController = new MenuController({ menuModel: MenuModel })
 
 router.get('/', menuController.getAll)
-router.get('/menu-add', (req, res) => {
-  res.render('menu/menu-add')
-})
+
+router.get('/menu-add', (req, res) => res.render('menu/menu-add'))
+
 router.get('/:id', menuController.getById)
+
+router.get('/edit/:id', menuController.renderEditForm)
+
 router.post('/', menuController.create)
+
 router.delete('/:id', menuController.delete)
+
 router.patch('/:id', menuController.update)
 
 export default router
