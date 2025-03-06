@@ -2,22 +2,28 @@
   <link rel="stylesheet" href="/css/menu.css">
 {{/contentFor}}
 
-<h1>Carta Menú</h1>
 
+<main class="menuMainContainer">
+
+<h1>Carta Menú</h1>
 <a href="/menu/menu-add">Agregar comida</a>
 
-<div class="menu-container">
+<div class="menuMainContainer-menu">
     {{#each productos}}
-        <div class="menu-item">
-            <h4>{{nombreProducto}}</h4>
+            <h4 class="menuMainContainer-menu-celd">{{nombreProducto}}</h4>
             {{!--<p>{{categoria}}</p>--}}
-            <p>${{precio}}</p>
-            <img src="{{imagen}}" alt="">
-            <button onclick="eliminarProducto('{{_id}}')">Eliminar</button>
-            <a href="/menu/edit/{{_id}}">Editar</a>
-        </div>
+            <p class="menuMainContainer-menu-celd">${{precio}}</p>
+            {{!--<img src="{{imagen}}" alt="">--}}
+            
+            <div class="menuMainContainer-menu-btns menuMainContainer-menu-celd">
+              <button onclick="eliminarProducto('{{_id}}')">
+                <img src="assets/bin.png" alt="delete icon">
+              </button>
+              <a href="/menu/edit/{{_id}}"><img src="assets/pen.png" alt="edit icon"></a>
+            </div>
     {{/each}}
 </div>
+</main>
 
 <script>
   async function eliminarProducto(id) {

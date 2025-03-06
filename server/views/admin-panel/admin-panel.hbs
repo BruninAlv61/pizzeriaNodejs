@@ -1,10 +1,19 @@
-<h1>Bienvenido {{user.username}} al panel de administrador</h1>
-<a href="/logout">Cerrar sesión</a>
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/admin-panel.css" />
+{{/contentFor}}
 
-<div class="list-container">
-    <a href="/menu">Carta Menú</a>
-    <a href="">Categorías</a>
-    <a href="">Cabeceras</a>
-    <a href="">Sobre Nosotros</a>
-    <a href="">Sucursales</a>
-</div>
+<main class="admn-mainContainer">
+  <div class="admn-mainContainer-textContainer">
+    <h1 class="admn-mainContainer-title">¡Hola
+      <span class="admn-mainContainer-userName">{{user.username}}</span>!
+    </h1>
+    <h2 class="admn-mainContainer-subTitle">Bienvenido al panel de administrador</h2>
+  </div>
+
+  <p class="admn-mainContainer-text" >¿Qué desea gestionar?</p>
+  <a class="admn-mainContainer-anchor" href="/menu">Carta Menú</a>
+  <a class="admn-mainContainer-anchor" href="">Categorías</a>
+  <a class="admn-mainContainer-anchor" href="">Cabeceras</a>
+  <a class="admn-mainContainer-anchor" href="">Sobre Nosotros</a>
+  <a class="admn-mainContainer-anchor" href="">Sucursales</a>
+</main>
