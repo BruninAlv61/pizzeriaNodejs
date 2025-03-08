@@ -1,3 +1,14 @@
 <nav>
-    <a href="/logout">Cerrar sesión</a>
+  <ul>
+    <li>
+      {{#unless (eq currentPath "/admin-panel")}}
+        <button onclick="window.history.back()">
+          <img src="/assets/flecha-izquierda.png" alt="volver" />
+        </button>
+      {{/unless}}
+    </li>
+    <li>
+      <a href="/logout">Cerrar sesión</a>
+    </li>
+  </ul>
 </nav>

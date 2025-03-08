@@ -6,7 +6,7 @@
 <main class="menuMainContainer">
 
 <h1>Carta Menú</h1>
-<a href="/menu/menu-add">Agregar comida</a>
+<a class="menuMainContainer-addBtn" href="/menu/menu-add">Agregar comida +</a>
 
 <div class="menuMainContainer-menu">
     {{#each productos}}
@@ -16,10 +16,10 @@
             {{!--<img src="{{imagen}}" alt="">--}}
             
             <div class="menuMainContainer-menu-btns menuMainContainer-menu-celd">
+              <a href="/menu/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
               <button onclick="eliminarProducto('{{_id}}')">
-                <img src="assets/bin.png" alt="delete icon">
+                <img src="/assets/bin.png" alt="delete icon">
               </button>
-              <a href="/menu/edit/{{_id}}"><img src="assets/pen.png" alt="edit icon"></a>
             </div>
     {{/each}}
 </div>

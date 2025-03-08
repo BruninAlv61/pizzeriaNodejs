@@ -1,10 +1,16 @@
-<h1>Register</h1>
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/login.css" />
+{{/contentFor}}
 
-<form action="/register" method="POST">
+<main class="loginMain">
+  <h1 class="loginMain-tittle">Register</h1>
+
+  <form class="loginMain-form" action="/register" method="POST">
     <label for="">Usuario</label>
-    <input type="text" name="username" id="username">
+    <input type="text" name="username" autocomplete="off" placeholder="Nombre del usuario" id="username" />
     <label for="">Contraseña</label>
-    <input type="password" name="password" id="password">
+    <input type="password" placeholder="Contraseña" autocomplete="off" name="password" id="password" />
     <button type="submit">Ingresar</button>
     <a href="/login">Iniciar sesión</a>
-</form>
+  </form>
+</main>

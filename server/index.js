@@ -57,7 +57,7 @@ app.get('/admin-panel', (req, res) => {
   if (!user) {
     return res.redirect('/login')
   }
-  res.render('admin-panel/admin-panel', { user })
+  res.render('admin-panel/admin-panel', { user, currentPath: req.path })
 })
 
 // Public files

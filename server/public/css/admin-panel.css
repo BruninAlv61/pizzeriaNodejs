@@ -1,8 +1,15 @@
 .admn-mainContainer{
     display: grid;
     place-items: center;
-    gap: 30px;
     padding: 25px;
+}
+
+.admn-mainContainer article{
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 30px;
 }
 
 .admn-mainContainer-anchor{
@@ -34,4 +41,11 @@
 
 .admn-mainContainer-text{
     font-size: 1.4em;
+}
+
+@media (min-width: 700px){
+
+    .admn-mainContainer article{
+        width: 650px;
+    }
 }

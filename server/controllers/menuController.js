@@ -71,6 +71,6 @@ export class MenuController {
       return res.status(404).send('Producto no encontrado')
     }
 
-    res.render('menu/menu-edit', { producto })
+    res.render('menu/menu-edit', { producto, currentPath: req.path })
   }
 }

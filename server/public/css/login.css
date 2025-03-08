@@ -1,0 +1,67 @@
+.loginMain{
+    display: grid;
+    place-items: center;
+    padding: 25px;
+    gap: 30px;
+}
+
+.loginMain-tittle{
+    font-weight: 450;
+}
+
+.loginMain-tittle span{
+    color: #CD563E;
+}
+
+.loginMain-form{
+    display: grid;
+    width: 100%;
+    background-color: #CD563E;
+    padding: 20px;
+    border-radius: 30px;
+    gap: 10px;
+}
+
+.loginMain-form label{
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.loginMain-form input, select{
+    background-color: #ECAC9F;
+    border: none;
+    border-radius: 20px;
+    color: #B84E39;
+    padding: 10px;
+}
+
+.loginMain-form input::placeholder{
+    color: #B84E39;
+}
+
+.loginMain-form input:focus, select:focus{
+    outline: none;
+}
+
+
+.loginMain-form button{
+    background: #8D3625;
+    color: #fff;
+    border: 2px solid #4F190E;
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+}
+
+.loginMain-form a{
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+@media (min-width: 700px){
+    .loginMain-form{
+        width: 650px;
+    }
+}

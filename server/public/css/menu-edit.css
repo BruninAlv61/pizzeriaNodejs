@@ -1,0 +1,60 @@
+.menuEditMain{
+    display: grid;
+    place-items: center;
+    padding: 25px;
+    gap: 30px;
+}
+
+.menuEditMain-tittle{
+    font-weight: 450;
+}
+
+.menuEditMain-tittle span{
+    color: #CD563E;
+}
+
+.menuEditMain-form{
+    display: grid;
+    width: 100%;
+    background-color: #CD563E;
+    padding: 20px;
+    border-radius: 30px;
+    gap: 10px;
+}
+
+.menuEditMain-form label{
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.menuEditMain-form input, select{
+    background-color: #ECAC9F;
+    border: none;
+    border-radius: 20px;
+    color: #B84E39;
+    padding: 10px;
+}
+
+.menuEditMain-form input::placeholder{
+    color: #B84E39;
+}
+
+.menuEditMain-form input:focus, select:focus{
+    outline: none;
+}
+
+
+.menuEditMain-form button{
+    background: #8D3625;
+    color: #fff;
+    border: 2px solid #4F190E;
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+}
+
+@media (min-width: 700px){
+    .menuEditMain-form{
+        width: 650px;
+    }
+}
