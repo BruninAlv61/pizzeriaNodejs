@@ -13,6 +13,7 @@ import menuRoutes from './routes/menu.routes.js'
 import loginRoutes from './routes/login.routes.js'
 import registerRoutes from './routes/register.routes.js'
 import logoutRoutes from './routes/logout.routes.js'
+import categoriesRoutes from './routes/categories.routes.js'
 
 dotenv.config()
 
@@ -48,6 +49,7 @@ app.set('view engine', '.hbs')
 
 // Routes
 app.use('/menu', menuRoutes)
+app.use('/categories', categoriesRoutes)
 app.use('/login', loginRoutes)
 app.use('/register', registerRoutes)
 app.use('/logout', logoutRoutes)

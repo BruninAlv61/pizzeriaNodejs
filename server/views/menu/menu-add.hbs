@@ -15,10 +15,9 @@
     />
     <label for="categoria">Categoría</label>
     <select id="categoria" name="categoria">
-      <option value="pizza">Pizzas</option>
-      <option value="hamburguesa">Hamburguesas</option>
-      <option value="bebida">Bebidas</option>
-      <option value="postre">Postres</option>
+      {{#each categories}}
+        <option value="{{nombreCategoria}}">{{nombreCategoria}}</option>
+      {{/each}}
     </select>
     <label for="precio">Precio</label>
     <input

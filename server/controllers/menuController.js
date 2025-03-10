@@ -1,8 +1,14 @@
 import { menuSchema, partialMenuSchema } from '../schemas/menu.js'
 
 export class MenuController {
-  constructor ({ menuModel }) {
+  constructor ({ menuModel, categoriesModel }) { // Agregamos categoriesModel
     this.menuModel = menuModel
+    this.categoriesModel = categoriesModel
+  }
+
+  renderAddForm = async (req, res) => {
+    const categories = await this.categoriesModel.getAll() // Obtener todas las categorías
+    res.render('menu/menu-add', { categories }) // Pasarlas a la vista
   }
 
   getAll = async (req, res) => {

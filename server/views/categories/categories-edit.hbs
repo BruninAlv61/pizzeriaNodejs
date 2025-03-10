@@ -1,0 +1,43 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/categories-edit.css">
+{{/contentFor}}
+
+<main class="categoriesEditMain">
+<h1 class="categoriesEditMain-tittle">Editando "<span>{{category.nombreCategoria}}</span>"</h1>
+<form class="categoriesEditMain-form" id="editForm">
+    <input type="hidden" autocomplete="off" name="id" value="{{category._id}}">
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombreCategoria" autocomplete="off" value="{{category.nombreCategoria}}" placeholder="Nombre de la categoría">
+    
+    <label for="portada">Portada</label>
+    <input type="text" name="portada" value="{{category.portadaCategoria}}" autocomplete="off" placeholder="URL imagen">
+    <button type="submit">Guardar cambios</button>
+</form>
+</main>
+
+<script>
+  document.getElementById('editForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const id = formData.get('id');
+    
+    const data = {
+      nombreCategoria: formData.get('nombreCategoria'),
+      portada: formData.get('portada')
+    };
+
+    const res = await fetch(`/categories/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      alert('Categoría actualizada correctamente');
+      window.location.href = '/categories'; // Redirige de vuelta al menú
+    } else {
+      alert('Error al actualizar la categoría');
+    }
+  });
+</script>

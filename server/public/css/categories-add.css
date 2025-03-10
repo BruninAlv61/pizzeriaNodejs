@@ -1,0 +1,60 @@
+.categoriesMain{
+    display: grid;
+    place-items: center;
+    padding: 25px;
+    gap: 30px;
+}
+
+.categoriesMain-tittle{
+    font-weight: 450;
+}
+
+.categoriesMain-tittle span{
+    color: #CD563E;
+}
+
+.categoriesMain-form{
+    display: grid;
+    width: 100%;
+    background-color: #CD563E;
+    padding: 20px;
+    border-radius: 30px;
+    gap: 10px;
+}
+
+.categoriesMain-form label{
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.categoriesMain-form input, select{
+    background-color: #ECAC9F;
+    border: none;
+    border-radius: 20px;
+    color: #B84E39;
+    padding: 10px;
+}
+
+.categoriesMain-form input::placeholder{
+    color: #B84E39;
+}
+
+.categoriesMain-form input:focus, select:focus{
+    outline: none;
+}
+
+
+.categoriesMain-form button{
+    background: #8D3625;
+    color: #fff;
+    border: 2px solid #4F190E;
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+}
+
+@media (min-width: 700px){
+    .categoriesMain-form{
+        width: 650px;
+    }
+}

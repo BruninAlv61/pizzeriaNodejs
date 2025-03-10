@@ -1,0 +1,38 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/categories.css">
+{{/contentFor}}
+
+
+<main class="categoriesMain">
+
+<h1>Categorías</h1>
+<a class="categoriesMain-addBtn" href="/categories/categories-add">Agregar categoria +</a>
+
+<div class="categoriesMain-categories">
+    {{#each categories}}
+            <h4 class="categoriesMain-categories-celd">{{nombreCategoria}}</h4>
+            {{!--<img src="{{imagen}}" alt="">--}}
+            
+            <div class="categoriesMain-categories-btns categoriesMain-categories-celd">
+              <a href="/categories/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
+              <button onclick="eliminarCategoria('{{_id}}')">
+                <img src="/assets/bin.png" alt="delete icon">
+              </button>
+            </div>
+    {{/each}}
+</div>
+</main>
+
+<script>
+  async function eliminarCategoria(id) {
+    const confirmar = confirm("¿Seguro que quieres eliminar esta categoria?");
+    if (confirmar) {
+      const res = await fetch(`/categories/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        location.reload(); // Recargar la página para ver los cambios
+      } else {
+        alert("Hubo un error al eliminar el producto.");
+      }
+    }
+  }
+</script>
