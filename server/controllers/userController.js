@@ -18,7 +18,7 @@ export class UserController {
     }
 
     // 🔐 Generar token y guardarlo en la cookie
-    setAuthCookie(res, { id: user._id, username: user.username })
+    await setAuthCookie(res, { id: user._id, username: user.username })
 
     res.redirect('/admin-panel')
   }
@@ -36,7 +36,7 @@ export class UserController {
     }
 
     // 🔐 Generar token para el nuevo usuario
-    setAuthCookie(res, { id: newUser.id, username: newUser.user })
+    await setAuthCookie(res, { id: newUser.id, username: newUser.user })
 
     res.redirect('/admin-panel')
   }

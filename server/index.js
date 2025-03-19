@@ -14,6 +14,7 @@ import loginRoutes from './routes/login.routes.js'
 import registerRoutes from './routes/register.routes.js'
 import logoutRoutes from './routes/logout.routes.js'
 import categoriesRoutes from './routes/categories.routes.js'
+import ofertasCombosRoutes from './routes/ofertas-combos.routes.js'
 
 dotenv.config()
 
@@ -53,6 +54,7 @@ app.use('/categories', categoriesRoutes)
 app.use('/login', loginRoutes)
 app.use('/register', registerRoutes)
 app.use('/logout', logoutRoutes)
+app.use('/ofertas-combos', ofertasCombosRoutes)
 
 app.get('/admin-panel', (req, res) => {
   const { user } = req.session

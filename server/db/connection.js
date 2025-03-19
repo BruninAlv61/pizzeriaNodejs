@@ -49,3 +49,14 @@ export async function connectCategories () {
     await client.close()
   }
 }
+
+export async function connectOfertasCombos () {
+  try {
+    await client.connect()
+    console.log('✅ Conexión exitosa a MongoDB Atlas')
+    return client.db('pizzasDB').collection('ofertas-combos') // Usa el nombre correcto de la DB y colección
+  } catch (error) {
+    console.error('❌ Error conectando a MongoDB:', error)
+    await client.close()
+  }
+}

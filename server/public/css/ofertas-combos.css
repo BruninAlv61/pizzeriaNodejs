@@ -1,0 +1,67 @@
+.ofertasCombosMain{
+    padding: 25px;
+    display: grid;
+    place-items: center;
+    gap: 10px;
+}
+
+.ofertasCombosMain h1{
+    font-weight: 450;
+}
+
+.ofertasCombosMain-ofertaCombo{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    width: 100%;
+    background-color: #CD563E;
+    padding: 10px;
+    gap: 5px;
+    border-radius: 25px;
+}
+
+.ofertasCombosMain-ofertaCombo-celd{
+    background-color: #8C3C2B;
+    border-radius: 10px;
+    padding: 10px;
+    color: #fff;
+    font-weight: 500;
+    gap: 10px;
+}
+
+.ofertasCombosMain-ofertaCombo-btns{
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr 1fr;
+}
+
+.ofertasCombosMain-ofertaCombo-btns button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.ofertasCombosMain-ofertaCombo-btns img{
+    width: 32px;
+    height: 32px;
+}
+
+.ofertasCombosMain-add{
+    text-decoration: none;
+    color: #fff;
+    background: #CD563E;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+@media (min-width: 700px){
+    .ofertasCombosMain-ofertaCombo{
+        width: 650px;
+    }
+}
+
+@media (min-width: 1000px){
+    .ofertasCombosMain-ofertaCombo{
+        width: 850px;
+    }
+}
