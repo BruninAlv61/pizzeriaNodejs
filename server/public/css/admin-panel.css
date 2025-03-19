@@ -1,10 +1,10 @@
-.admn-mainContainer{
+.admn-mainContainer {
     display: grid;
     place-items: center;
     padding: 25px;
 }
 
-.admn-mainContainer article{
+.admn-mainContainer article {
     display: grid;
     place-items: center;
     width: 100%;
@@ -12,7 +12,29 @@
     gap: 30px;
 }
 
-.admn-mainContainer-anchor{
+/* Encabezado */
+.admn-mainContainer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #CD563E;
+    padding: 15px 20px;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+}
+
+.admn-mainContainer-header h1 {
+    color: white;
+    font-size: 1.5em;
+}
+
+.admn-mainContainer-header img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.admn-mainContainer-anchor {
     background-color: #CD563E;
     width: 100%;
     height: 62px;
@@ -23,29 +45,34 @@
     list-style: none;
     text-decoration: none;
     font-size: 1.5em;
+    transition: background-color 0.3s;
 }
 
-.admn-mainContainer-title{
+.admn-mainContainer-anchor:hover {
+    background-color: #b24b34;
+}
+
+.admn-mainContainer-title {
     font-size: 2em;
     font-weight: 500;
 }
 
-.admn-mainContainer-userName{
+.admn-mainContainer-userName {
     color: #CD563E;
+    font-weight: bold;
 }
 
-.admn-mainContainer-subTitle{
+.admn-mainContainer-subTitle {
     font-size: 1.5em;
     font-weight: 450;
 }
 
-.admn-mainContainer-text{
+.admn-mainContainer-text {
     font-size: 1.4em;
 }
 
-@media (min-width: 700px){
-
-    .admn-mainContainer article{
+@media (min-width: 700px) {
+    .admn-mainContainer article {
         width: 650px;
     }
 }

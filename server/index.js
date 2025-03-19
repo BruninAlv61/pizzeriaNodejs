@@ -31,20 +31,23 @@ app.use(tokenVerify)
 // Configurations
 const __dirname = dirname(fileURLToPath(import.meta.url))
 app.set('views', join(__dirname, 'views'))
-app.engine('.hbs', engine({
-  defaultLayout: 'main',
-  layoutDir: join(app.get('views'), 'layouts'),
-  partialsDir: join(app.get('views'), 'partials'),
-  extname: '.hbs',
-  helpers: {
-    contentFor: function (name, options) {
-      if (!this._sections) this._sections = {}
-      this._sections[name] = options.fn(this)
-      return null
-    },
-    eq: (a, b) => a === b
-  }
-}))
+app.engine(
+  '.hbs',
+  engine({
+    defaultLayout: 'main',
+    layoutDir: join(app.get('views'), 'layouts'),
+    partialsDir: join(app.get('views'), 'partials'),
+    extname: '.hbs',
+    helpers: {
+      contentFor: function (name, options) {
+        if (!this._sections) this._sections = {}
+        this._sections[name] = options.fn(this)
+        return null
+      },
+      eq: (a, b) => a === b
+    }
+  })
+)
 
 app.set('view engine', '.hbs')
 
