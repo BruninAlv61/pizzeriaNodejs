@@ -1,0 +1,42 @@
+{{#contentFor 'styles'}}
+  <link rel='stylesheet' href='/css/categories-add.css' />
+{{/contentFor}}
+
+<main class='categoriesMain'>
+  <h1 class='categoriesMain-tittle'>Sucursales</h1>
+  <form class='categoriesMain-form' action='/sucursales' method='post'>
+    <label for='nombreSucursal'>Nombre de la sucursal</label>
+    <input
+      type='text'
+      id='nombreSucursal'
+      name='nombreSucursal'
+      autocomplete='off'
+      placeholder='Nombre de la sucursal'
+    />
+    <label for='direccion'>Dirección</label>
+    <input
+      type='text'
+      id='direccion'
+      name='direccion'
+      autocomplete='off'
+      placeholder='Dirección de la sucursal'
+    />
+    <label for='telefono'>Telefono</label>
+    <input
+      type='text'
+      id='telefono'
+      name='telefono'
+      autocomplete='off'
+      placeholder='Telefono de la sucursal'
+    />
+    <label for='horarios'>Horarios</label>
+    <input
+      type='text'
+      id='horarios'
+      name='horarios'
+      autocomplete='off'
+      placeholder='Horarios de la sucursal'
+    />
+    <button type='submit'>Guardar</button>
+  </form>
+</main>

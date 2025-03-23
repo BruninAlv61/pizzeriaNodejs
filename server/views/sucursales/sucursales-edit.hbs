@@ -1,0 +1,77 @@
+{{#contentFor 'styles'}}
+  <link rel='stylesheet' href='/css/categories-edit.css' />
+{{/contentFor}}
+
+<main class='categoriesEditMain'>
+  <h1 class='categoriesEditMain-tittle'>Editando "<span
+    >{{sucursales.nombreSucursal}}</span>"</h1>
+  <form class='categoriesEditMain-form' id='editForm'>
+    <input
+      type='hidden'
+      autocomplete='off'
+      name='id'
+      value='{{sucursales._id}}'
+    />
+    <label for='nombre'>Nombre</label>
+    <input
+      type='text'
+      id='nombre'
+      name='nombreSucursal'
+      autocomplete='off'
+      value='{{sucursales.nombreSucursal}}'
+      placeholder='Nombre de la sucursal'
+    />
+    <label for='direccion'>Dirección</label>
+    <input
+      type='text'
+      id='direccion'
+      name='direccion'
+      autocomplete='off'
+      value='{{sucursales.direccion}}'
+      placeholder='Dirección de la sucursal'
+    />
+    <label for='telefono'>Telefono</label>
+    <input
+      type='text'
+      id='telefono'
+      name='telefono'
+      autocomplete='off'
+      value='{{sucursales.telefono}}'
+      placeholder='Telefono de la sucursal'
+    />
+    <label for='horarios'>Horarios</label>
+    <input
+      type='text'
+      id='horarios'
+      name='horarios'
+      autocomplete='off'
+      value='{{sucursales.horarios}}'
+      placeholder='Horarios de la sucursal'
+    />
+    <button type='submit'>Guardar cambios</button>
+  </form>
+</main>
+
+<script>
+document.getElementById('editForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const id = formData.get('id');
+    
+    const data = {
+      nombreSucursal: formData.get('nombreSucursal'),
+      direccion: formData.get('direccion'),
+      telefono: formData.get('telefono'),
+      horarios: formData.get('horarios')
+    };
+
+    await fetch(`/sucursales/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    window.location.href = '/sucursales'; // Redirige de vuelta al menú
+  });
+</script>

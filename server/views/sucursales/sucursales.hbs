@@ -1,0 +1,39 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/categories.css">
+{{/contentFor}}
+
+
+<main class="categoriesMain">
+
+<h1>Sucursales</h1>
+<a class="categoriesMain-addBtn" href="/sucursales/add">Agregar Sucursal +</a>
+
+{{#if sucursales}}
+<div class="categoriesMain-categories">
+    {{#each sucursales}}
+            <h4 class="categoriesMain-categories-celd">{{nombreSucursal}}</h4> 
+            <div class="categoriesMain-categories-btns categoriesMain-categories-celd">
+              <a href="/sucursales/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
+              <button onclick="eliminarSucursal('{{_id}}')">
+                <img src="/assets/bin.png" alt="delete icon">
+              </button>
+            </div>
+    {{/each}}
+    {{else}}
+    
+</div>
+    <div>
+        <h4>No hay sucursales agregadas</h4>
+    </div>
+    {{/if}}
+</main>
+
+<script>
+  async function eliminarSucursal(id) {
+    const confirmar = confirm("¿Seguro que quieres eliminar esta sucursal?");
+    if (confirmar) {
+      await fetch(`/sucursales/${id}`, { method: 'DELETE' });
+      location.reload(); // Recargar la página para ver los cambios
+    }
+  }
+</script>
