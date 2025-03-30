@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36" version="26.1.3">
+  <diagram name="Página-1" id="YxhbBEmgIP0uJEjZGHPe">
+    <mxGraphModel dx="989" dy="542" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#202020" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="qiUgwwKjVemnB6bvXaoM-1" value="Empleado" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#d79b00;fillColor=#ffe6cc;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="20" y="545" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qiUgwwKjVemnB6bvXaoM-4" value="Iniciar sesión" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;fontColor=#FF8000;labelBorderColor=none;" vertex="1" parent="1">
+          <mxGeometry x="280" y="545" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qiUgwwKjVemnB6bvXaoM-5" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#d79b00;fillColor=#ffe6cc;fontColor=#FFFFFF;" edge="1" parent="1" source="qiUgwwKjVemnB6bvXaoM-1" target="qiUgwwKjVemnB6bvXaoM-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="655" as="sourcePoint" />
+            <mxPoint x="490" y="605" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qiUgwwKjVemnB6bvXaoM-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#FF8000;fillColor=#ffe6cc;strokeColor=#d79b00;" edge="1" parent="1" source="qiUgwwKjVemnB6bvXaoM-6" target="qiUgwwKjVemnB6bvXaoM-29">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="560" />
+              <mxPoint x="550" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qiUgwwKjVemnB6bvXaoM-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#ffe6cc;strokeColor=#d79b00;" edge="1" parent="1" source="qiUgwwKjVemnB6bvXaoM-6" target="qiUgwwKjVemnB6bvXaoM-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qiUgwwKjVemnB6bvXaoM-6" value="Acceder al panel del empleado" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;fontColor=#FF8000;labelBorderColor=none;" vertex="1" parent="1">
+          <mxGeometry x="420" y="545" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qiUgwwKjVemnB6bvXaoM-7" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#d79b00;fillColor=#ffe6cc;fontColor=#FF8000;labelBorderColor=none;" edge="1" parent="1" source="qiUgwwKjVemnB6bvXaoM-4" target="qiUgwwKjVemnB6bvXaoM-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="605" as="sourcePoint" />
+            <mxPoint x="550" y="555" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qiUgwwKjVemnB6bvXaoM-28" value="crear una cuenta" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;fontColor=#FF8000;labelBorderColor=none;" vertex="1" parent="1">
+          <mxGeometry x="110" y="540" width="110" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="qiUgwwKjVemnB6bvXaoM-29" value="Gestionar pedidos" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;fontColor=#FF8000;labelBorderColor=none;" vertex="1" parent="1">
+          <mxGeometry x="570" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qiUgwwKjVemnB6bvXaoM-30" value="Gestionar ventas" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;fontColor=#FF8000;labelBorderColor=none;" vertex="1" parent="1">
+          <mxGeometry x="570" y="630" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
