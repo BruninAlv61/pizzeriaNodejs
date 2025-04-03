@@ -3,18 +3,18 @@
 {{/contentFor}}
 
 <main class="categoriesMain">
-  <h1 class="categoriesMain-tittle">Categorías</h1>
+  <h1 class="categoriesMain-title">Categories</h1>
   <form class="categoriesMain-form" action="/categories" method="post">
-    <label for="nombreCategoria">Nombre</label>
+    <label for="categoryName">Name</label>
     <input
       type="text"
-      id="nombreCategoria"
-      name="nombreCategoria"
+      id="categoryName"
+      name="categoryName"
       autocomplete="off"
-      placeholder="Nombre de la categoría"
+      placeholder="Category name"
     />
-    <label for="portadaCategoria">Portada</label>
-    <input type="text" id="portadaCategoria" name="portadaCategoria" autocomplete="off" placeholder="URL de la portada"/>
-    <button type="submit">Guardar</button>
+    <label for="categoryCover">Cover</label>
+    <input type="text" id="categoryCover" name="categoryCover" autocomplete="off" placeholder="Cover URL"/>
+    <button type="submit">Save</button>
   </form>
 </main>

@@ -14,10 +14,10 @@ export class UserController {
 
     const user = await this.userModel.login({ input: result.data })
     if (!user) {
-      return res.status(401).json({ message: 'Usuario o contraseña incorrecta' })
+      return res.status(401).json({ message: 'Incorrect username or password' })
     }
 
-    // 🔐 Generar token y guardarlo en la cookie
+    // 🔐 Generate token and save it in the cookie
     await setAuthCookie(res, { id: user._id, username: user.username })
 
     res.redirect('/admin-panel')
@@ -32,10 +32,10 @@ export class UserController {
     const newUser = await this.userModel.register({ input: result.data })
 
     if (!newUser) {
-      return res.status(400).json({ message: 'El usuario ya existe' }) // ✅ Evita que avance
+      return res.status(400).json({ message: 'User already exists' }) // ✅ Prevents further execution
     }
 
-    // 🔐 Generar token para el nuevo usuario
+    // 🔐 Generate token for the new user
     await setAuthCookie(res, { id: newUser.id, username: newUser.user })
 
     res.redirect('/admin-panel')

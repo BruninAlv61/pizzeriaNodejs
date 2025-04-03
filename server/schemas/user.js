@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
 export const userSchema = z.object({
-  username: z.string().min(4, 'El nombre de usuario debe tener al menos 4 caracteres'),
-  password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres')
+  username: z.string().min(4, 'Username must be at least 4 characters long'),
+  password: z.string().min(6, 'Password must be at least 6 characters long')
 })

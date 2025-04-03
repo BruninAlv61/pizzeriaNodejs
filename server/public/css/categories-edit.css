@@ -1,19 +1,19 @@
-.categoriesEditMain{
+.categoriesEditMain {
     display: grid;
     place-items: center;
     padding: 25px;
     gap: 30px;
 }
 
-.categoriesEditMain-tittle{
+.categoriesEditMain-title {
     font-weight: 450;
 }
 
-.categoriesEditMain-tittle span{
+.categoriesEditMain-title span {
     color: #CD563E;
 }
 
-.categoriesEditMain-form{
+.categoriesEditMain-form {
     display: grid;
     width: 100%;
     background-color: #CD563E;
@@ -22,12 +22,12 @@
     gap: 10px;
 }
 
-.categoriesEditMain-form label{
+.categoriesEditMain-form label {
     color: #fff;
     font-size: 1.2rem;
 }
 
-.categoriesEditMain-form input, select{
+.categoriesEditMain-form input, select {
     background-color: #ECAC9F;
     border: none;
     border-radius: 20px;
@@ -35,16 +35,15 @@
     padding: 10px;
 }
 
-.categoriesEditMain-form input::placeholder{
+.categoriesEditMain-form input::placeholder {
     color: #B84E39;
 }
 
-.categoriesEditMain-form input:focus, select:focus{
+.categoriesEditMain-form input:focus, select:focus {
     outline: none;
 }
 
-
-.categoriesEditMain-form button{
+.categoriesEditMain-form button {
     background: #8D3625;
     color: #fff;
     border: 2px solid #4F190E;
@@ -53,8 +52,8 @@
     border-radius: 20px;
 }
 
-@media (min-width: 700px){
-    .categoriesEditMain-form{
+@media (min-width: 700px) {
+    .categoriesEditMain-form {
         width: 650px;
     }
 }

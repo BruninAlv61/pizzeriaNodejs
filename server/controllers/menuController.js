@@ -1,35 +1,35 @@
 import { menuSchema, partialMenuSchema } from '../schemas/menu.js'
 
 export class MenuController {
-  constructor ({ menuModel, categoriesModel }) { // Agregamos categoriesModel
+  constructor ({ menuModel, categoriesModel }) { // Added categoriesModel
     this.menuModel = menuModel
     this.categoriesModel = categoriesModel
   }
 
   renderAddForm = async (req, res) => {
-    const categories = await this.categoriesModel.getAll() // Obtener todas las categorías
-    res.render('menu/menu-add', { categories }) // Pasarlas a la vista
+    const categories = await this.categoriesModel.getAll() // Get all categories
+    res.render('menu/menu-add', { categories }) // Pass them to the view
   }
 
   getAll = async (req, res) => {
-    const { categoria } = req.query
-    const productos = await this.menuModel.getAll({ categoria })
-    res.render('menu/menu.hbs', { productos })
+    const { category } = req.query
+    const products = await this.menuModel.getAll({ category })
+    res.render('menu/menu.hbs', { products })
   }
 
   getById = async (req, res) => {
     try {
       const { id } = req.params
-      const producto = await this.menuModel.getById({ id })
+      const product = await this.menuModel.getById({ id })
 
-      if (!producto) {
-        return res.status(404).json({ message: 'Producto no encontrado' })
+      if (!product) {
+        return res.status(404).json({ message: 'Product not found' })
       }
 
-      res.json(producto)
+      res.json(product)
     } catch (error) {
-      console.error('Error en getById:', error.message)
-      return res.status(400).json({ message: 'ID inválido o formato incorrecto' })
+      console.error('Error in getById:', error.message)
+      return res.status(400).json({ message: 'Invalid ID or incorrect format' })
     }
   }
 
@@ -50,10 +50,10 @@ export class MenuController {
     const result = await this.menuModel.delete({ id })
 
     if (!result) {
-      return res.status(404).json({ message: 'Producto no encontrado' })
+      return res.status(404).json({ message: 'Product not found' })
     }
 
-    return res.json({ message: 'Producto eliminado' })
+    return res.json({ message: 'Product deleted' })
   }
 
   update = async (req, res) => {
@@ -71,12 +71,12 @@ export class MenuController {
 
   renderEditForm = async (req, res) => {
     const { id } = req.params
-    const producto = await this.menuModel.getById({ id })
+    const product = await this.menuModel.getById({ id })
 
-    if (!producto) {
-      return res.status(404).send('Producto no encontrado')
+    if (!product) {
+      return res.status(404).send('Product not found')
     }
 
-    res.render('menu/menu-edit', { producto, currentPath: req.path })
+    res.render('menu/menu-edit', { product, currentPath: req.path })
   }
 }

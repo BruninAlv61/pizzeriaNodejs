@@ -4,8 +4,8 @@ import { UserModel } from '../models/userModel.js'
 
 const router = express.Router()
 
-const userModel = new UserModel() // Instancia correcta
-const userController = new UserController({ userModel }) // Pasamos la instancia
+const userModel = new UserModel() // Correct instance
+const userController = new UserController({ userModel }) // Passing the instance
 
 router.get('/', (req, res) => {
   res.render('login/login')

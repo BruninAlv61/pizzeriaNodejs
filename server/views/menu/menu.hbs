@@ -5,19 +5,19 @@
 
 <main class="menuMainContainer">
 
-<h1>Carta Menú</h1>
-<a class="menuMainContainer-addBtn" href="/menu/menu-add">Agregar comida +</a>
+<h1>Menu</h1>
+<a class="menuMainContainer-addBtn" href="/menu/menu-add">Add Food +</a>
 
 <div class="menuMainContainer-menu">
-    {{#each productos}}
-            <h4 class="menuMainContainer-menu-celd">{{nombreProducto}}</h4>
-            {{!--<p>{{categoria}}</p>--}}
-            <p class="menuMainContainer-menu-celd">${{precio}}</p>
-            {{!--<img src="{{imagen}}" alt="">--}}
+    {{#each products}}
+            <h4 class="menuMainContainer-menu-celd">{{productName}}</h4>
+            {{!--<p>{{category}}</p>--}}
+            <p class="menuMainContainer-menu-celd">${{price}}</p>
+            {{!--<img src="{{image}}" alt="">--}}
             
             <div class="menuMainContainer-menu-btns menuMainContainer-menu-celd">
               <a href="/menu/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
-              <button onclick="eliminarProducto('{{_id}}')">
+              <button onclick="deleteProduct('{{_id}}')">
                 <img src="/assets/bin.png" alt="delete icon">
               </button>
             </div>
@@ -26,14 +26,14 @@
 </main>
 
 <script>
-  async function eliminarProducto(id) {
-    const confirmar = confirm("¿Seguro que quieres eliminar este producto?");
-    if (confirmar) {
+  async function deleteProduct(id) {
+    const confirmDelete = confirm("Are you sure you want to delete this product?");
+    if (confirmDelete) {
       const res = await fetch(`/menu/${id}`, { method: 'DELETE' });
       if (res.ok) {
-        location.reload(); // Recargar la página para ver los cambios
+        location.reload(); // Reload the page to reflect changes
       } else {
-        alert("Hubo un error al eliminar el producto.");
+        alert("There was an error deleting the product.");
       }
     }
   }

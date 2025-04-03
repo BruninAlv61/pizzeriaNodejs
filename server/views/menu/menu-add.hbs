@@ -3,34 +3,34 @@
 {{/contentFor}}
 
 <main class="menuAddMain">
-  <h1 class="menuAddMain-tittle">Agregando comida</h1>
+  <h1 class="menuAddMain-title">Adding Food</h1>
   <form class="menuAddMain-form" action="/menu" method="POST">
-    <label for="nombreProducto">Nombre</label>
+    <label for="productName">Name</label>
     <input
-      id="nombreProducto"
+      id="productName"
       type="text"
-      name="nombreProducto"
-      placeholder="nombre del producto"
+      name="productName"
+      placeholder="Product name"
       autocomplete="off"
     />
-    <label for="categoria">Categoría</label>
-    <select id="categoria" name="categoria">
+    <label for="category">Category</label>
+    <select id="category" name="category">
       {{#each categories}}
-        <option value="{{nombreCategoria}}">{{nombreCategoria}}</option>
+        <option value="{{categoryName}}">{{categoryName}}</option>
       {{/each}}
     </select>
-    <label for="precio">Precio</label>
+    <label for="price">Price</label>
     <input
-      id="precio"
+      id="price"
       type="number"
-      name="precio"
-      placeholder="precio"
+      name="price"
+      placeholder="Price"
       step="0.01"
       autocomplete="off"
       required
     />
-    <label for="imagen">Imagen</label>
-    <input id="imagen" type="text" name="imagen" autocomplete="off" placeholder="url imagen" />
-    <button type="submit">Guardar</button>
+    <label for="image">Image</label>
+    <input id="image" type="text" name="image" autocomplete="off" placeholder="Image URL" />
+    <button type="submit">Save</button>
   </form>
 </main>

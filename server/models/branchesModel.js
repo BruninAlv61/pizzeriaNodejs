@@ -1,14 +1,14 @@
-import { connectSucursales } from '../db/connection.js'
+import { connectBranches } from '../db/connection.js'
 import { ObjectId } from 'mongodb'
 
-export class SucursalesModel {
+export class BranchesModel {
   static async getAll () {
-    const db = await connectSucursales()
+    const db = await connectBranches()
     return db.find({}).toArray()
   }
 
   static async create ({ input }) {
-    const db = await connectSucursales()
+    const db = await connectBranches()
     const { insertedId } = await db.insertOne(input)
 
     return {
@@ -18,10 +18,10 @@ export class SucursalesModel {
   }
 
   static async getById ({ id }) {
-    const db = await connectSucursales()
-    // Validar que el ID sea un ObjectId válido
+    const db = await connectBranches()
+    // Validate that the ID is a valid ObjectId
     if (!ObjectId.isValid(id)) {
-      throw new Error('El ID proporcionado no es válido')
+      throw new Error('The provided ID is not valid')
     }
 
     const objectId = new ObjectId(id)
@@ -29,10 +29,14 @@ export class SucursalesModel {
   }
 
   static async update ({ id, input }) {
-    const db = await connectSucursales()
+    const db = await connectBranches()
     const objectId = new ObjectId(id)
 
-    const { ok, value } = await db.findOneAndUpdate({ _id: objectId }, { $set: input }, { returnNewDocument: true })
+    const { ok, value } = await db.findOneAndUpdate(
+      { _id: objectId },
+      { $set: input },
+      { returnNewDocument: true }
+    )
 
     if (!ok) return false
 
@@ -40,7 +44,7 @@ export class SucursalesModel {
   }
 
   static async delete ({ id }) {
-    const db = await connectSucursales()
+    const db = await connectBranches()
     const objectId = new ObjectId(id)
     const { deletedCount } = await db.deleteOne({ _id: objectId })
     return deletedCount > 0

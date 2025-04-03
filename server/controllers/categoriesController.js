@@ -16,13 +16,13 @@ export class CategoriesController {
       const category = await this.categoriesModel.getById({ id })
 
       if (!category) {
-        return res.status(404).json({ message: 'Categoría no encontrada' })
+        return res.status(404).json({ message: 'Category not found' })
       }
 
       res.json(category)
     } catch (error) {
-      console.error('Error en getById:', error.message)
-      return res.status(400).json({ message: 'ID inválido o formato incorrecto' })
+      console.error('Error in getById:', error.message)
+      return res.status(400).json({ message: 'Invalid ID or incorrect format' })
     }
   }
 
@@ -43,10 +43,10 @@ export class CategoriesController {
     const result = await this.categoriesModel.delete({ id })
 
     if (!result) {
-      return res.status(404).json({ message: 'Categoría no encontrada' })
+      return res.status(404).json({ message: 'Category not found' })
     }
 
-    return res.json({ message: 'Categoría eliminada' })
+    return res.json({ message: 'Category deleted' })
   }
 
   update = async (req, res) => {
@@ -67,7 +67,7 @@ export class CategoriesController {
     const category = await this.categoriesModel.getById({ id })
 
     if (!category) {
-      return res.status(404).send('Categoría no encontrada')
+      return res.status(404).send('Category not found')
     }
 
     res.render('categories/categories-edit', { category, currentPath: req.path })

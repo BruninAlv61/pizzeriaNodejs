@@ -3,15 +3,15 @@
 {{/contentFor}}
 
 <main class="categoriesEditMain">
-<h1 class="categoriesEditMain-tittle">Editando "<span>{{category.nombreCategoria}}</span>"</h1>
+<h1 class="categoriesEditMain-title">Editing "<span>{{category.categoryName}}</span>"</h1>
 <form class="categoriesEditMain-form" id="editForm">
     <input type="hidden" autocomplete="off" name="id" value="{{category._id}}">
-    <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" name="nombreCategoria" autocomplete="off" value="{{category.nombreCategoria}}" placeholder="Nombre de la categoría">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="categoryName" autocomplete="off" value="{{category.categoryName}}" placeholder="Category name">
     
-    <label for="portada">Portada</label>
-    <input type="text" name="portada" value="{{category.portadaCategoria}}" autocomplete="off" placeholder="URL imagen">
-    <button type="submit">Guardar cambios</button>
+    <label for="cover">Cover</label>
+    <input type="text" id="cover" name="cover" value="{{category.categoryCover}}" autocomplete="off" placeholder="Cover URL">
+    <button type="submit">Save changes</button>
 </form>
 </main>
 
@@ -23,8 +23,8 @@
     const id = formData.get('id');
     
     const data = {
-      nombreCategoria: formData.get('nombreCategoria'),
-      portada: formData.get('portada')
+      categoryName: formData.get('categoryName'),
+      categoryCover: formData.get('cover')
     };
 
     const res = await fetch(`/categories/${id}`, {
@@ -34,10 +34,10 @@
     });
 
     if (res.ok) {
-      alert('Categoría actualizada correctamente');
-      window.location.href = '/categories'; // Redirige de vuelta al menú
+      alert('Category successfully updated');
+      window.location.href = '/categories'; // Redirects back to the categories list
     } else {
-      alert('Error al actualizar la categoría');
+      alert('Error updating category');
     }
   });
 </script>

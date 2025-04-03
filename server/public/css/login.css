@@ -1,19 +1,19 @@
-.loginMain{
+.loginMain {
     display: grid;
     place-items: center;
     padding: 25px;
     gap: 30px;
 }
 
-.loginMain-tittle{
+.loginMain-title {
     font-weight: 450;
 }
 
-.loginMain-tittle span{
+.loginMain-title span {
     color: #CD563E;
 }
 
-.loginMain-form{
+.loginMain-form {
     display: grid;
     width: 100%;
     background-color: #CD563E;
@@ -22,12 +22,12 @@
     gap: 10px;
 }
 
-.loginMain-form label{
+.loginMain-form label {
     color: #fff;
     font-size: 1.2rem;
 }
 
-.loginMain-form input, select{
+.loginMain-form input, select {
     background-color: #ECAC9F;
     border: none;
     border-radius: 20px;
@@ -35,16 +35,15 @@
     padding: 10px;
 }
 
-.loginMain-form input::placeholder{
+.loginMain-form input::placeholder {
     color: #B84E39;
 }
 
-.loginMain-form input:focus, select:focus{
+.loginMain-form input:focus, select:focus {
     outline: none;
 }
 
-
-.loginMain-form button{
+.loginMain-form button {
     background: #8D3625;
     color: #fff;
     border: 2px solid #4F190E;
@@ -53,15 +52,15 @@
     border-radius: 20px;
 }
 
-.loginMain-form a{
+.loginMain-form a {
     color: #fff;
     text-decoration: none;
     text-align: center;
     font-size: 1.1rem;
 }
 
-@media (min-width: 700px){
-    .loginMain-form{
+@media (min-width: 700px) {
+    .loginMain-form {
         width: 650px;
     }
 }

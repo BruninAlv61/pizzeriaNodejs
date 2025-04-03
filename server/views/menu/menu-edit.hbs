@@ -3,23 +3,23 @@
 {{/contentFor}}
 
 <main class="menuEditMain">
-<h1 class="menuEditMain-tittle">Editando "<span>{{producto.nombreProducto}}</span>"</h1>
+<h1 class="menuEditMain-title">Editing "<span>{{product.productName}}</span>"</h1>
 <form class="menuEditMain-form" id="editForm">
-    <input type="hidden" autocomplete="off" name="id" value="{{producto._id}}">
-    <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" name="nombreProducto" autocomplete="off" value="{{producto.nombreProducto}}" placeholder="Nombre del producto">
-    <label for="categoria">Categoría</label>
-    <select id="categoria" name="categoria">
-        <option value="pizza" {{#if (eq producto.categoria "pizza")}}selected{{/if}}>Pizzas</option>
-        <option value="hamburguesa" {{#if (eq producto.categoria "hamburguesa")}}selected{{/if}}>Hamburguesas</option>
-        <option value="bebida" {{#if (eq producto.categoria "bebida")}}selected{{/if}}>Bebidas</option>
-        <option value="postre" {{#if (eq producto.categoria "postre")}}selected{{/if}}>Postres</option>
+    <input type="hidden" autocomplete="off" name="id" value="{{product._id}}">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="productName" autocomplete="off" value="{{product.productName}}" placeholder="Product name">
+    <label for="category">Category</label>
+    <select id="category" name="category">
+        <option value="pizza" {{#if (eq product.category "pizza")}}selected{{/if}}>Pizzas</option>
+        <option value="burger" {{#if (eq product.category "burger")}}selected{{/if}}>Burgers</option>
+        <option value="drink" {{#if (eq product.category "drink")}}selected{{/if}}>Drinks</option>
+        <option value="dessert" {{#if (eq product.category "dessert")}}selected{{/if}}>Desserts</option>
     </select>
-    <label for="precio">Precio</label>
-    <input id="precio" type="number" name="precio" value="{{producto.precio}}" autocomplete="off" placeholder="Precio" step="0.01" required>
-    <label for="imagen">Imagen</label>
-    <input type="text" name="imagen" value="{{producto.imagen}}" autocomplete="off" placeholder="URL imagen">
-    <button type="submit">Guardar cambios</button>
+    <label for="price">Price</label>
+    <input id="price" type="number" name="price" value="{{product.price}}" autocomplete="off" placeholder="Price" step="0.01" required>
+    <label for="image">Image</label>
+    <input type="text" name="image" value="{{product.image}}" autocomplete="off" placeholder="Image URL">
+    <button type="submit">Save changes</button>
 </form>
 </main>
 
@@ -31,10 +31,10 @@
     const id = formData.get('id');
     
     const data = {
-      nombreProducto: formData.get('nombreProducto'),
-      categoria: formData.get('categoria'),
-      precio: parseFloat(formData.get('precio')),
-      imagen: formData.get('imagen')
+      productName: formData.get('productName'),
+      category: formData.get('category'),
+      price: parseFloat(formData.get('price')),
+      image: formData.get('image')
     };
 
     const res = await fetch(`/menu/${id}`, {
@@ -44,10 +44,10 @@
     });
 
     if (res.ok) {
-      alert('Producto actualizado correctamente');
-      window.location.href = '/menu'; // Redirige de vuelta al menú
+      alert('Product successfully updated');
+      window.location.href = '/menu'; // Redirects back to the menu
     } else {
-      alert('Error al actualizar el producto');
+      alert('Error updating the product');
     }
   });
 </script>

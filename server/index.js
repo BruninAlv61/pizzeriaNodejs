@@ -14,8 +14,8 @@ import loginRoutes from './routes/login.routes.js'
 import registerRoutes from './routes/register.routes.js'
 import logoutRoutes from './routes/logout.routes.js'
 import categoriesRoutes from './routes/categories.routes.js'
-import ofertasCombosRoutes from './routes/ofertas-combos.routes.js'
-import sucursalesRoutes from './routes/sucursales.routes.js'
+import comboOffersRoutes from './routes/combo-offers.routes.js' // Renombrado
+import branchesRoutes from './routes/branches.routes.js'
 
 dotenv.config()
 
@@ -58,8 +58,8 @@ app.use('/categories', categoriesRoutes)
 app.use('/login', loginRoutes)
 app.use('/register', registerRoutes)
 app.use('/logout', logoutRoutes)
-app.use('/ofertas-combos', ofertasCombosRoutes)
-app.use('/sucursales', sucursalesRoutes)
+app.use('/combo-offers', comboOffersRoutes) // Modificado aquí
+app.use('/branches', branchesRoutes)
 
 app.get('/admin-panel', (req, res) => {
   const { user } = req.session

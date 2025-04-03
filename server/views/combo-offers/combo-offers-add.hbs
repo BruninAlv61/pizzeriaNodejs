@@ -1,0 +1,42 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/combo-offers-add.css" />
+{{/contentFor}}
+
+<main class="comboOffersMain">
+  <h1 class="comboOffersMain-title">Combo Offers</h1>
+  <form class="comboOffersMain-form" action="/combo-offers/create" method="post">
+    <label for="comboOfferName">Name</label>
+    <input
+      type="text"
+      id="comboOfferName"
+      name="comboOfferName"
+      autocomplete="off"
+      placeholder="Combo Offer name"
+    />
+    <label for="comboOfferDescription">Description</label>
+    <textarea
+      id="comboOfferDescription"
+      name="comboOfferDescription"
+      autocomplete="off"
+      placeholder="Combo Offer description"
+    ></textarea>
+    <label for="comboOfferPrice">Price</label>
+    <input
+      type="number"
+      id="comboOfferPrice"
+      name="comboOfferPrice"
+      step="0.01"
+      autocomplete="off"
+      placeholder="Combo Offer price"
+    />
+    <label for="comboOfferImage">Cover Image</label>
+    <input 
+      type="text" 
+      id="comboOfferImage" 
+      name="comboOfferImage" 
+      autocomplete="off" 
+      placeholder="Cover image URL"
+    />
+    <button type="submit">Save</button>
+  </form>
+</main>  

@@ -1,19 +1,19 @@
-.ofertasCombosEditMain{
+.comboOffersMain {
     display: grid;
     place-items: center;
     padding: 25px;
     gap: 30px;
 }
 
-.ofertasCombosEditMain-tittle{
+.comboOffersMain-title {
     font-weight: 450;
 }
 
-.ofertasCombosEditMain-tittle span{
+.comboOffersMain-title span {
     color: #CD563E;
 }
 
-.ofertasCombosEditMain-form{
+.comboOffersMain-form {
     display: grid;
     width: 100%;
     background-color: #CD563E;
@@ -22,12 +22,12 @@
     gap: 10px;
 }
 
-.ofertasCombosEditMain-form label{
+.comboOffersMain-form label {
     color: #fff;
     font-size: 1.2rem;
 }
 
-.ofertasCombosEditMain-form input, textarea{
+.comboOffersMain-form input, textarea {
     background-color: #ECAC9F;
     border: none;
     border-radius: 20px;
@@ -36,16 +36,15 @@
     resize: none;
 }
 
-.ofertasCombosEditMain-form input::placeholder, textarea::placeholder{
+.comboOffersMain-form input::placeholder, textarea::placeholder {
     color: #B84E39;
 }
 
-.ofertasCombosEditMain-form input:focus, textarea:focus{
+.comboOffersMain-form input:focus, textarea:focus {
     outline: none;
 }
 
-
-.ofertasCombosEditMain-form button{
+.comboOffersMain-form button {
     background: #8D3625;
     color: #fff;
     border: 2px solid #4F190E;
@@ -54,8 +53,8 @@
     border-radius: 20px;
 }
 
-@media (min-width: 700px){
-    .ofertasCombosEditMain-form{
+@media (min-width: 700px) {
+    .comboOffersMain-form {
         width: 650px;
     }
 }

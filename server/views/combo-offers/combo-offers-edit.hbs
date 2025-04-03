@@ -1,0 +1,52 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/combo-offers-edit.css">
+{{/contentFor}}
+
+<main class="comboOffersEditMain">
+<h1 class="comboOffersEditMain-title">Editing "<span>{{comboOffer.comboOfferName}}</span>"</h1>
+<form class="comboOffersEditMain-form" id="editForm">
+    <input type="hidden" autocomplete="off" name="id" value="{{comboOffer._id}}">
+    <label for="comboOfferName">Name</label>
+    <input type="text" id="comboOfferName" name="comboOfferName" autocomplete="off" value="{{comboOffer.comboOfferName}}" placeholder="Combo Offer Name">
+    <label for="comboOfferDescription">Description</label>
+    <textarea id="comboOfferDescription" name="comboOfferDescription" autocomplete="off" placeholder="Combo Offer Description">{{comboOffer.comboOfferDescription}}</textarea>
+    <label for="comboOfferPrice">Price</label>
+    <input
+      type="number"
+      id="comboOfferPrice"
+      name="comboOfferPrice"
+      step="0.01"
+      autocomplete="off"
+      placeholder="Combo Offer Price"
+      value="{{comboOffer.comboOfferPrice}}"
+    />
+    <label for="comboOfferImage">Cover Image</label>
+    <input type="text" id="comboOfferImage" name="comboOfferImage" value="{{comboOffer.comboOfferImage}}" autocomplete="off" placeholder="Cover Image URL"/>
+    <button type="submit">Save Changes</button>
+</form>
+</main>
+
+<script>
+  document.getElementById('editForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formData = new FormData(e.target);
+  const id = formData.get('id');
+  
+  const data = {
+    comboOfferName: formData.get('comboOfferName'),
+    comboOfferDescription: formData.get('comboOfferDescription'),
+    comboOfferPrice: formData.get('comboOfferPrice'),
+    comboOfferImage: formData.get('comboOfferImage')
+  };
+
+  await fetch(`/combo-offers/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+
+  window.location.href = '/combo-offers'; // Redirect to main list if update is successful
+  
+});
+</script>

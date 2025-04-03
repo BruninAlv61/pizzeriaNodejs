@@ -1,10 +1,10 @@
-.admn-mainContainer {
+.admin-mainContainer {
     display: grid;
     place-items: center;
     padding: 25px;
 }
 
-.admn-mainContainer article {
+.admin-mainContainer article {
     display: grid;
     place-items: center;
     width: 100%;
@@ -13,7 +13,7 @@
 }
 
 /* Encabezado */
-.admn-mainContainer-header {
+.admin-mainContainer-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,18 +23,18 @@
     width: 100%;
 }
 
-.admn-mainContainer-header h1 {
+.admin-mainContainer-header h1 {
     color: white;
     font-size: 1.5em;
 }
 
-.admn-mainContainer-header img {
+.admin-mainContainer-header img {
     width: 35px;
     height: 35px;
     border-radius: 50%;
 }
 
-.admn-mainContainer-anchor {
+.admin-mainContainer-anchor {
     background-color: #CD563E;
     width: 100%;
     height: 62px;
@@ -48,31 +48,31 @@
     transition: background-color 0.3s;
 }
 
-.admn-mainContainer-anchor:hover {
+.admin-mainContainer-anchor:hover {
     background-color: #b24b34;
 }
 
-.admn-mainContainer-title {
+.admin-mainContainer-title {
     font-size: 2em;
     font-weight: 500;
 }
 
-.admn-mainContainer-userName {
+.admin-mainContainer-userName {
     color: #CD563E;
     font-weight: bold;
 }
 
-.admn-mainContainer-subTitle {
+.admin-mainContainer-subTitle {
     font-size: 1.5em;
     font-weight: 450;
 }
 
-.admn-mainContainer-text {
+.admin-mainContainer-text {
     font-size: 1.4em;
 }
 
 @media (min-width: 700px) {
-    .admn-mainContainer article {
+    .admin-mainContainer article {
         width: 650px;
     }
 }

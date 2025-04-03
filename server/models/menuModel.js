@@ -1,15 +1,15 @@
-import { connect } from '../db/connection.js'
+import { connectMenu } from '../db/connection.js'
 import { menuSchema } from '../schemas/menu.js'
 import { ObjectId } from 'mongodb'
 
 export class MenuModel {
-  static async getAll ({ categoria }) {
-    const db = await connect()
+  static async getAll ({ category }) {
+    const db = await connectMenu()
 
-    if (categoria) {
+    if (category) {
       return db.find({
-        categoria: {
-          $regex: categoria,
+        category: {
+          $regex: category,
           $options: 'i'
         }
       }).toArray()
@@ -19,11 +19,11 @@ export class MenuModel {
   }
 
   static async getById ({ id }) {
-    const db = await connect()
+    const db = await connectMenu()
 
-    // Validar que el ID sea un ObjectId válido
+    // Validate that the ID is a valid ObjectId
     if (!ObjectId.isValid(id)) {
-      throw new Error('El ID proporcionado no es válido')
+      throw new Error('The provided ID is not valid')
     }
 
     const objectId = new ObjectId(id)
@@ -31,34 +31,34 @@ export class MenuModel {
   }
 
   static async create ({ input }) {
-    const db = await connect()
+    const db = await connectMenu()
 
-    const productoValidado = menuSchema.parse(input)
+    const validatedProduct = menuSchema.parse(input)
 
-    const { insertedId } = await db.insertOne(productoValidado)
+    const { insertedId } = await db.insertOne(validatedProduct)
 
     return {
       id: insertedId,
-      ...productoValidado
+      ...validatedProduct
     }
   }
 
   static async delete ({ id }) {
-    const db = await connect()
+    const db = await connectMenu()
     const objectId = new ObjectId(id)
     const { deletedCount } = await db.deleteOne({ _id: objectId })
     return deletedCount > 0
   }
 
   static async update ({ id, input }) {
-    const db = await connect()
+    const db = await connectMenu()
     const objectId = new ObjectId(id)
 
-    const productoValidado = menuSchema.partial().parse(input)
+    const validatedProduct = menuSchema.partial().parse(input)
 
     const { value } = await db.findOneAndUpdate(
       { _id: objectId },
-      { $set: productoValidado },
+      { $set: validatedProduct },
       { returnDocument: 'after' }
     )
 

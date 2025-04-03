@@ -11,9 +11,9 @@ export class CategoriesModel {
   static async getById ({ id }) {
     const db = await connectCategories()
 
-    // Validar que el ID sea un ObjectId válido
+    // Validate that the ID is a valid ObjectId
     if (!ObjectId.isValid(id)) {
-      throw new Error('El ID proporcionado no es válido')
+      throw new Error('The provided ID is not valid')
     }
 
     const objectId = new ObjectId(id)
@@ -23,13 +23,13 @@ export class CategoriesModel {
   static async create ({ input }) {
     const db = await connectCategories()
 
-    const categoriaValidada = categoriesSchema.parse(input)
+    const validatedCategory = categoriesSchema.parse(input)
 
-    const { insertedId } = await db.insertOne(categoriaValidada)
+    const { insertedId } = await db.insertOne(validatedCategory)
 
     return {
       id: insertedId,
-      ...categoriaValidada
+      ...validatedCategory
     }
   }
 
@@ -44,11 +44,11 @@ export class CategoriesModel {
     const db = await connectCategories()
     const objectId = new ObjectId(id)
 
-    const productoValidado = categoriesSchema.partial().parse(input)
+    const validatedCategory = categoriesSchema.partial().parse(input)
 
     const { value } = await db.findOneAndUpdate(
       { _id: objectId },
-      { $set: productoValidado },
+      { $set: validatedCategory },
       { returnDocument: 'after' }
     )
 

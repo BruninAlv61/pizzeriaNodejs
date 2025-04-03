@@ -1,0 +1,38 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/branches.css">
+{{/contentFor}}
+
+<main class="branchesMain">
+
+<h1>Branches</h1>
+<a class="branchesMain-addBtn" href="/branches/add">Add Branch +</a>
+
+{{#if branches}}
+<div class="branchesMain-list">
+    {{#each branches}}
+            <h4 class="branchesMain-list-item">{{branchName}}</h4> 
+            <div class="branchesMain-list-btns branchesMain-list-item">
+              <a href="/branches/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
+              <button onclick="deleteBranch('{{_id}}')">
+                <img src="/assets/bin.png" alt="delete icon">
+              </button>
+            </div>
+    {{/each}}
+    {{else}}
+    
+</div>
+    <div>
+        <h4>No branches added</h4>
+    </div>
+    {{/if}}
+</main>
+
+<script>
+  async function deleteBranch(id) {
+    const confirmDelete = confirm("Are you sure you want to delete this branch?");
+    if (confirmDelete) {
+      await fetch(`/branches/${id}`, { method: 'DELETE' });
+      location.reload(); // Reload the page to reflect changes
+    }
+  }
+</script>

@@ -1,0 +1,76 @@
+{{#contentFor 'styles'}}
+  <link rel='stylesheet' href='/css/branches-edit.css' />
+{{/contentFor}}
+
+<main class='branchesEditMain'>
+  <h1 class='branchesEditMain-title'>Editing "<span>{{branch.branchName}}</span>"</h1>
+  <form class='branchesEditMain-form' id='editForm'>
+    <input
+      type='hidden'
+      autocomplete='off'
+      name='id'
+      value='{{branch._id}}'
+    />
+    <label for='branchName'>Branch Name</label>
+    <input
+      type='text'
+      id='branchName'
+      name='branchName'
+      autocomplete='off'
+      value='{{branch.branchName}}'
+      placeholder='Branch Name'
+    />
+    <label for='address'>Address</label>
+    <input
+      type='text'
+      id='address'
+      name='address'
+      autocomplete='off'
+      value='{{branch.address}}'
+      placeholder='Branch Address'
+    />
+    <label for='phone'>Phone</label>
+    <input
+      type='text'
+      id='phone'
+      name='phone'
+      autocomplete='off'
+      value='{{branch.phone}}'
+      placeholder='Branch Phone'
+    />
+    <label for='schedule'>Schedule</label>
+    <input
+      type='text'
+      id='schedule'
+      name='schedule'
+      autocomplete='off'
+      value='{{branch.schedule}}'
+      placeholder='Branch Schedule'
+    />
+    <button type='submit'>Save Changes</button>
+  </form>
+</main>
+
+<script>
+document.getElementById('editForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const id = formData.get('id');
+    
+    const data = {
+      branchName: formData.get('branchName'),
+      address: formData.get('address'),
+      phone: formData.get('phone'),
+      schedule: formData.get('schedule')
+    };
+
+    await fetch(`/branches/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    window.location.href = '/branches'; // Redirects back to the menu
+  });
+</script>

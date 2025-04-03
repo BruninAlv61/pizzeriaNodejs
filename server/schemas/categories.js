@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 export const categoriesSchema = z.object({
-  nombreCategoria: z.string().min(1, 'El nombre del producto es obligatorio'),
-  portadaCategoria: z.string().url('Debe ser una URL válida de imagen')
+  categoryName: z.string().min(1, 'The category name is required'),
+  categoryCover: z.string().url('Must be a valid image URL')
 })
 
 export const partialCategoriesSchema = categoriesSchema.partial()
