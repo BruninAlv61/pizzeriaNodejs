@@ -1,10 +1,10 @@
 {{#contentFor "styles"}}
-  <link rel="stylesheet" href="/css/categories-edit.css">
+  <link rel="stylesheet" href="/css/manage-form.css">
 {{/contentFor}}
 
-<main class="categoriesEditMain">
-<h1 class="categoriesEditMain-title">Editing "<span>{{category.categoryName}}</span>"</h1>
-<form class="categoriesEditMain-form" id="editForm">
+<main class="main">
+<h1 class="main-title">Editing "<span>{{category.categoryName}}</span>"</h1>
+<form class="main-form" id="editForm">
     <input type="hidden" autocomplete="off" name="id" value="{{category._id}}">
     <label for="name">Name</label>
     <input type="text" id="name" name="categoryName" autocomplete="off" value="{{category.categoryName}}" placeholder="Category name">

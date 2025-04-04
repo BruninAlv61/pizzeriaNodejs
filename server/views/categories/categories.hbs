@@ -1,18 +1,18 @@
 {{#contentFor "styles"}}
-  <link rel="stylesheet" href="/css/categories.css">
+  <link rel="stylesheet" href="/css/manage-table.css">
 {{/contentFor}}
 
-<main class="categoriesMain">
+<main class="main">
 
 <h1>Categories</h1>
-<a class="categoriesMain-addBtn" href="/categories/categories-add">Add category +</a>
+<a class="main-addBtn" href="/categories/categories-add">Add category +</a>
 
-<div class="categoriesMain-categories">
+<div class="main-list">
     {{#each categories}}
-            <h4 class="categoriesMain-categories-celd">{{categoryName}}</h4>
+            <h4 class="main-list-item">{{categoryName}}</h4>
             {{!--<img src="{{image}}" alt="">--}}
 
-            <div class="categoriesMain-categories-btns categoriesMain-categories-celd">
+            <div class="main-list-btns main-list-item">
               <a href="/categories/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
               <button onclick="deleteCategory('{{_id}}')">
                 <img src="/assets/bin.png" alt="delete icon">

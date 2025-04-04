@@ -1,21 +1,21 @@
 {{#contentFor "styles"}}
-  <link rel="stylesheet" href="/css/menu.css">
+  <link rel="stylesheet" href="/css/manage-table.css">
 {{/contentFor}}
 
 
-<main class="menuMainContainer">
+<main class="main">
 
 <h1>Menu</h1>
-<a class="menuMainContainer-addBtn" href="/menu/menu-add">Add Food +</a>
+<a class="main-addBtn" href="/menu/menu-add">Add Food +</a>
 
-<div class="menuMainContainer-menu">
+<div class="main-list col-3">
     {{#each products}}
-            <h4 class="menuMainContainer-menu-celd">{{productName}}</h4>
+            <h4 class="main-list-item">{{productName}}</h4>
             {{!--<p>{{category}}</p>--}}
-            <p class="menuMainContainer-menu-celd">${{price}}</p>
+            <p class="main-list-item">${{price}}</p>
             {{!--<img src="{{image}}" alt="">--}}
             
-            <div class="menuMainContainer-menu-btns menuMainContainer-menu-celd">
+            <div class="main-list-btns main-list-item">
               <a href="/menu/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
               <button onclick="deleteProduct('{{_id}}')">
                 <img src="/assets/bin.png" alt="delete icon">

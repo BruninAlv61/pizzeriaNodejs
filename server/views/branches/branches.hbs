@@ -1,17 +1,17 @@
 {{#contentFor "styles"}}
-  <link rel="stylesheet" href="/css/branches.css">
+  <link rel="stylesheet" href="/css/manage-table.css">
 {{/contentFor}}
 
-<main class="branchesMain">
+<main class="main">
 
 <h1>Branches</h1>
-<a class="branchesMain-addBtn" href="/branches/add">Add Branch +</a>
+<a class="main-addBtn" href="/branches/add">Add Branch +</a>
 
 {{#if branches}}
-<div class="branchesMain-list">
+<div class="main-list">
     {{#each branches}}
-            <h4 class="branchesMain-list-item">{{branchName}}</h4> 
-            <div class="branchesMain-list-btns branchesMain-list-item">
+            <h4 class="main-list-item">{{branchName}}</h4> 
+            <div class="main-list-btns main-list-item">
               <a href="/branches/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
               <button onclick="deleteBranch('{{_id}}')">
                 <img src="/assets/bin.png" alt="delete icon">

@@ -1,10 +1,33 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: system-ui;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui;
 }
 
-body{
-    min-height: 100vh;
+body {
+  min-height: 100vh;
+  background: url('/assets/pizza-back.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
+@media (min-width: 650px) {
+  body {
+    background: url('/assets/pizza-desktop.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+@media (min-width: 1700px) {
+    body {
+      background: url('/assets/pizza-max-desktop.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+  

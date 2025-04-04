@@ -1,25 +1,28 @@
-{{#contentFor "styles"}}
-  <link rel="stylesheet" href="/css/combo-offers.css">
+{{#contentFor 'styles'}}
+  <link rel='stylesheet' href='/css/manage-table.css' />
 {{/contentFor}}
 
-<main class="comboOffersMain">
-    <h1>Combo Offers</h1>
-    <a href="/combo-offers/add" class="comboOffersMain-add">Add Combo Offer +</a>
+<main class='main'>
+  <h1>Combo Offers</h1>
+  <a href='/combo-offers/add' class='main-addBtn'>Add Combo Offer +</a>
+  <div class='main-list'>
     {{#if comboOffers}}
-        {{#each comboOffers}}
-            <div class="comboOffersMain-offerCombo">
-                <h4 class="comboOffersMain-offerCombo-cell">{{comboOfferName}}</h4>
-                <div class="comboOffersMain-offerCombo-buttons comboOffersMain-offerCombo-cell">
-                    <a href="/combo-offers/edit/{{_id}}"><img src="/assets/pen.png" alt="Edit icon"></a>
-                    <button onclick="deleteComboOffer('{{_id}}')">
-                        <img src="/assets/bin.png" alt="Delete icon">
-                    </button>
-                </div>
-            </div>
-        {{/each}}
+      {{#each comboOffers}}
+        <h4 class='main-list-item'>{{comboOfferName}}</h4>
+        <div class='main-list-btns main-list-item'>
+          <a href='/combo-offers/edit/{{_id}}'><img
+              src='/assets/pen.png'
+              alt='Edit icon'
+            /></a>
+          <button onclick="deleteComboOffer('{{_id}}')">
+            <img src='/assets/bin.png' alt='Delete icon' />
+          </button>
+        </div>
+      {{/each}}
     {{else}}
-        <h2>No combo offers available</h2>
+      <h2>No combo offers available</h2>
     {{/if}}
+  </div>
 </main>
 
 <script>

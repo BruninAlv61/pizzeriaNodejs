@@ -1,10 +1,10 @@
 {{#contentFor "styles"}}
-  <link rel="stylesheet" href="/css/menu-edit.css">
+  <link rel="stylesheet" href="/css/manage-form.css">
 {{/contentFor}}
 
-<main class="menuEditMain">
-<h1 class="menuEditMain-title">Editing "<span>{{product.productName}}</span>"</h1>
-<form class="menuEditMain-form" id="editForm">
+<main class="main">
+<h1 class="main-title">Editing "<span>{{product.productName}}</span>"</h1>
+<form class="main-form" id="editForm">
     <input type="hidden" autocomplete="off" name="id" value="{{product._id}}">
     <label for="name">Name</label>
     <input type="text" id="name" name="productName" autocomplete="off" value="{{product.productName}}" placeholder="Product name">

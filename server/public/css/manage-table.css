@@ -1,15 +1,15 @@
-.comboOffersMain {
+.main{
     padding: 25px;
     display: grid;
     place-items: center;
     gap: 10px;
 }
 
-.comboOffersMain h1 {
+.main h1{
     font-weight: 450;
 }
 
-.comboOffersMain-offerCombo {
+.main-list{
     display: grid;
     grid-template-columns: 1fr auto;
     width: 100%;
@@ -19,7 +19,11 @@
     border-radius: 25px;
 }
 
-.comboOffersMain-offerCombo-cell {
+.main .col-3{
+    grid-template-columns: 1fr 1fr auto;
+}
+
+.main-list-item{
     background-color: #8C3C2B;
     border-radius: 10px;
     padding: 10px;
@@ -28,24 +32,23 @@
     gap: 10px;
 }
 
-.comboOffersMain-offerCombo-buttons {
+.main-list-btns{
     display: grid;
     place-items: center;
     grid-template-columns: 1fr 1fr;
 }
 
-.comboOffersMain-offerCombo-buttons button {
+.main-list-btns button{
     background-color: transparent;
     border: none;
-    cursor: pointer;
 }
 
-.comboOffersMain-offerCombo-buttons img {
+.main-list-btns img{
     width: 32px;
     height: 32px;
 }
 
-.comboOffersMain-add {
+.main-addBtn{
     text-decoration: none;
     color: #fff;
     background: #CD563E;
@@ -54,14 +57,14 @@
     font-weight: 500;
 }
 
-@media (min-width: 700px) {
-    .comboOffersMain-offerCombo {
+@media (min-width: 700px){
+    .main-list{
         width: 650px;
     }
 }
 
-@media (min-width: 1000px) {
-    .comboOffersMain-offerCombo {
+@media (min-width: 1000px){
+    .main-list{
         width: 850px;
     }
 }

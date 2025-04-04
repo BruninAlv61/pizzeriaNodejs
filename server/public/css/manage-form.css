@@ -1,15 +1,19 @@
-.menuAddMain {
+.main {
     display: grid;
     place-items: center;
     padding: 25px;
     gap: 30px;
 }
 
-.menuAddMain-title {
+.main-title {
     font-weight: 450;
 }
 
-.menuAddMain-form {
+.main-title span {
+    color: #CD563E;
+}
+
+.main-form {
     display: grid;
     width: 100%;
     background-color: #CD563E;
@@ -18,28 +22,29 @@
     gap: 10px;
 }
 
-.menuAddMain-form label {
+.main-form label {
     color: #fff;
     font-size: 1.2rem;
 }
 
-.menuAddMain-form input, select {
+.main-form input, select, textarea {
     background-color: #ECAC9F;
     border: none;
     border-radius: 20px;
     color: #B84E39;
     padding: 10px;
+    resize: none;
 }
 
-.menuAddMain-form input::placeholder {
+.main-form input::placeholder, .main-form textarea::placeholder {
     color: #B84E39;
 }
 
-.menuAddMain-form input:focus, select:focus {
+.main-form input:focus, select:focus, textarea:focus {
     outline: none;
 }
 
-.menuAddMain-form button {
+.main-form button {
     background: #8D3625;
     color: #fff;
     border: 2px solid #4F190E;
@@ -49,7 +54,7 @@
 }
 
 @media (min-width: 700px) {
-    .menuAddMain-form {
+    .main-form {
         width: 650px;
     }
 }
