@@ -20,7 +20,7 @@ export class UserController {
     // 🔐 Generate token and save it in the cookie
     await setAuthCookie(res, { id: user._id, username: user.username })
 
-    res.redirect('/admin-panel')
+    res.redirect('/')
   }
 
   register = async (req, res) => {
@@ -38,6 +38,6 @@ export class UserController {
     // 🔐 Generate token for the new user
     await setAuthCookie(res, { id: newUser.id, username: newUser.user })
 
-    res.redirect('/admin-panel')
+    res.redirect('/')
   }
 }

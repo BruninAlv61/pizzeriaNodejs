@@ -61,7 +61,7 @@ app.use('/logout', logoutRoutes)
 app.use('/combo-offers', comboOffersRoutes) // Modificado aquí
 app.use('/branches', branchesRoutes)
 
-app.get('/admin-panel', (req, res) => {
+app.get('/', (req, res) => {
   const { user } = req.session
   if (!user) {
     return res.redirect('/login')

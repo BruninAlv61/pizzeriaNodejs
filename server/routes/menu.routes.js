@@ -8,7 +8,7 @@ const menuController = new MenuController({ menuModel: MenuModel, categoriesMode
 
 router.get('/', menuController.getAll)
 
-router.get('/menu-add', menuController.renderAddForm)
+router.get('/add', menuController.renderAddForm)
 
 router.get('/:id', menuController.getById)
 

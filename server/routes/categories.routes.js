@@ -8,7 +8,7 @@ const categoriesController = new CategoriesController({ categoriesModel: Categor
 
 router.get('/', categoriesController.getAll)
 
-router.get('/categories-add', (req, res) => {
+router.get('/add', (req, res) => {
   res.render('categories/categories-add')
 })
 
