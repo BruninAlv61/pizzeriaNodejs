@@ -4,22 +4,24 @@
 
 <main class="main">
 
-<h1>Categories</h1>
-<a class="main-addBtn" href="/categories/add">Add category +</a>
+  <h1>Categories</h1>
+  <a class="main-addBtn" href="/categories/add">Add category +</a>
 
-<div class="main-list">
+  <div class="main-list">
     {{#each categories}}
-            <h4 class="main-list-item">{{categoryName}}</h4>
-            {{!--<img src="{{image}}" alt="">--}}
+      <h4 class="main-list-item">{{category_name}}</h4>
 
-            <div class="main-list-btns main-list-item">
-              <a href="/categories/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
-              <button onclick="deleteCategory('{{_id}}')">
-                <img src="/assets/bin.png" alt="delete icon">
-              </button>
-            </div>
+      {{!-- Podés descomentar esto si querés mostrar la imagen --}}
+      {{!-- <img src="{{category_image}}" alt="{{category_name}} image"> --}}
+
+      <div class="main-list-btns main-list-item">
+        <a href="/categories/edit/{{categories_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
+        <button onclick="deleteCategory('{{categories_id}}')">
+          <img src="/assets/bin.png" alt="delete icon">
+        </button>
+      </div>
     {{/each}}
-</div>
+  </div>
 </main>
 
 <script>

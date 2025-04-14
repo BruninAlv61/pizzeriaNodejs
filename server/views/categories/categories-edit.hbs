@@ -3,28 +3,55 @@
 {{/contentFor}}
 
 <main class="main">
-<h1 class="main-title">Editing "<span>{{category.categoryName}}</span>"</h1>
-<form class="main-form" id="editForm">
-    <input type="hidden" autocomplete="off" name="id" value="{{category._id}}">
+  <h1 class="main-title">Editing "<span>{{category.category_name}}</span>"</h1>
+  <form class="main-form" id="editForm">
+    <input type="hidden" autocomplete="off" name="id" value="{{category.categories_id}}">
+
     <label for="name">Name</label>
-    <input type="text" id="name" name="categoryName" autocomplete="off" value="{{category.categoryName}}" placeholder="Category name">
-    
+    <input
+      type="text"
+      id="name"
+      name="category_name"
+      autocomplete="off"
+      value="{{category.category_name}}"
+      placeholder="Category name"
+    />
+
+    <label for="description">Description</label>
+    <input
+      type="text"
+      id="description"
+      name="category_description"
+      autocomplete="off"
+      value="{{category.category_description}}"
+      placeholder="Category description"
+    />
+
     <label for="cover">Cover</label>
-    <input type="text" id="cover" name="cover" value="{{category.categoryCover}}" autocomplete="off" placeholder="Cover URL">
+    <input
+      type="text"
+      id="cover"
+      name="category_image"
+      value="{{category.category_image}}"
+      autocomplete="off"
+      placeholder="Cover URL"
+    />
+
     <button type="submit">Save changes</button>
-</form>
+  </form>
 </main>
 
 <script>
   document.getElementById('editForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(e.target);
     const id = formData.get('id');
-    
+
     const data = {
-      categoryName: formData.get('categoryName'),
-      categoryCover: formData.get('cover')
+      category_name: formData.get('category_name'),
+      category_description: formData.get('category_description'),
+      category_image: formData.get('category_image')
     };
 
     const res = await fetch(`/categories/${id}`, {
@@ -35,7 +62,7 @@
 
     if (res.ok) {
       alert('Category successfully updated');
-      window.location.href = '/categories'; // Redirects back to the categories list
+      window.location.href = '/categories';
     } else {
       alert('Error updating category');
     }
