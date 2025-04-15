@@ -12,8 +12,8 @@ export class MenuController {
   }
 
   getAll = async (req, res) => {
-    const { category } = req.query
-    const products = await this.menuModel.getAll({ category })
+    const { categoryId } = req.query
+    const products = await this.menuModel.getAll({ categoryId })
     res.render('menu/menu.hbs', { products })
   }
 
@@ -71,12 +71,18 @@ export class MenuController {
 
   renderEditForm = async (req, res) => {
     const { id } = req.params
+
     const product = await this.menuModel.getById({ id })
+    const categories = await this.categoriesModel.getAll()
 
     if (!product) {
       return res.status(404).send('Product not found')
     }
 
-    res.render('menu/menu-edit', { product, currentPath: req.path })
+    res.render('menu/menu-edit', {
+      product,
+      categories, // <- las pasamos al template
+      currentPath: req.path
+    })
   }
 }

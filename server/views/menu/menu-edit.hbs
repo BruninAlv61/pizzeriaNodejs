@@ -3,38 +3,74 @@
 {{/contentFor}}
 
 <main class="main">
-<h1 class="main-title">Editing "<span>{{product.productName}}</span>"</h1>
-<form class="main-form" id="editForm">
-    <input type="hidden" autocomplete="off" name="id" value="{{product._id}}">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="productName" autocomplete="off" value="{{product.productName}}" placeholder="Product name">
-    <label for="category">Category</label>
-    <select id="category" name="category">
-        <option value="pizza" {{#if (eq product.category "pizza")}}selected{{/if}}>Pizzas</option>
-        <option value="burger" {{#if (eq product.category "burger")}}selected{{/if}}>Burgers</option>
-        <option value="drink" {{#if (eq product.category "drink")}}selected{{/if}}>Drinks</option>
-        <option value="dessert" {{#if (eq product.category "dessert")}}selected{{/if}}>Desserts</option>
+  <h1 class="main-title">Editing "<span>{{product.product_name}}</span>"</h1>
+  <form class="main-form" id="editForm">
+    <input type="hidden" name="product_id" value="{{product.product_id}}" autocomplete="off" />
+
+    <label for="product_name">Name</label>
+    <input
+      type="text"
+      id="product_name"
+      name="product_name"
+      value="{{product.product_name}}"
+      placeholder="Product name"
+      autocomplete="off"
+    />
+
+    <label for="product_description">Description</label>
+      <textarea
+        id="product_description"
+        name="product_description"
+        placeholder="Product description"
+        autocomplete="off"
+      >{{product.product_description}}</textarea>
+
+    <label for="category_id">Category</label>
+    <select id="category_id" name="category_id">
+      {{#each categories}}
+        <option value="{{categories_id}}" {{#if (eq this.categories_id ../product.category_id)}}selected{{/if}}>
+          {{category_name}}
+        </option>
+      {{/each}}
     </select>
-    <label for="price">Price</label>
-    <input id="price" type="number" name="price" value="{{product.price}}" autocomplete="off" placeholder="Price" step="0.01" required>
-    <label for="image">Image</label>
-    <input type="text" name="image" value="{{product.image}}" autocomplete="off" placeholder="Image URL">
+
+
+    <label for="product_price">Price</label>
+    <input
+      id="product_price"
+      type="number"
+      name="product_price"
+      value="{{product.product_price}}"
+      autocomplete="off"
+      placeholder="Price"
+      step="0.01"
+      required
+    />
+
+    <label for="product_image">Image</label>
+    <input
+      type="text"
+      name="product_image"
+      value="{{product.product_image}}"
+      autocomplete="off"
+      placeholder="Image URL"
+    />
+
     <button type="submit">Save changes</button>
-</form>
+  </form>
 </main>
 
 <script>
   document.getElementById('editForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
     const formData = new FormData(e.target);
-    const id = formData.get('id');
-    
+    const id = formData.get('product_id');
+
     const data = {
-      productName: formData.get('productName'),
-      category: formData.get('category'),
-      price: parseFloat(formData.get('price')),
-      image: formData.get('image')
+      product_name: formData.get('product_name'),
+      category_id: formData.get('category_id'),
+      product_price: parseFloat(formData.get('product_price')),
+      product_image: formData.get('product_image')
     };
 
     const res = await fetch(`/menu/${id}`, {
@@ -44,8 +80,7 @@
     });
 
     if (res.ok) {
-      alert('Product successfully updated');
-      window.location.href = '/menu'; // Redirects back to the menu
+      window.location.href = '/menu';
     } else {
       alert('Error updating the product');
     }

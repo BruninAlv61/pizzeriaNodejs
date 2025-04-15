@@ -2,27 +2,25 @@
   <link rel="stylesheet" href="/css/manage-table.css">
 {{/contentFor}}
 
-
 <main class="main">
+  <h1>Menu</h1>
+  <a class="main-addBtn" href="/menu/add">Add Food +</a>
 
-<h1>Menu</h1>
-<a class="main-addBtn" href="/menu/add">Add Food +</a>
-
-<div class="main-list col-3">
+  <div class="main-list col-3">
     {{#each products}}
-            <h4 class="main-list-item">{{productName}}</h4>
-            {{!--<p>{{category}}</p>--}}
-            <p class="main-list-item">${{price}}</p>
-            {{!--<img src="{{image}}" alt="">--}}
-            
-            <div class="main-list-btns main-list-item">
-              <a href="/menu/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
-              <button onclick="deleteProduct('{{_id}}')">
-                <img src="/assets/bin.png" alt="delete icon">
-              </button>
-            </div>
+      <h4 class="main-list-item">{{product_name}}</h4>
+      {{!--<p>{{category_id}}</p>--}} 
+      <p class="main-list-item">${{product_price}}</p>
+      {{!--<img src="{{product_image}}" alt="">--}}
+
+      <div class="main-list-btns main-list-item">
+        <a href="/menu/edit/{{product_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
+        <button onclick="deleteProduct('{{product_id}}')">
+          <img src="/assets/bin.png" alt="delete icon">
+        </button>
+      </div>
     {{/each}}
-</div>
+  </div>
 </main>
 
 <script>
@@ -31,7 +29,7 @@
     if (confirmDelete) {
       const res = await fetch(`/menu/${id}`, { method: 'DELETE' });
       if (res.ok) {
-        location.reload(); // Reload the page to reflect changes
+        location.reload();
       } else {
         alert("There was an error deleting the product.");
       }

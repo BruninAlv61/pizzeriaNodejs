@@ -31,20 +31,22 @@ export class CategoriesModel {
       throw new Error('Datos inválidos, no se puede crear la categoría')
     }
 
-    // Asegúrate de que los valores son de tipo string
-    const { category_name, category_description, category_image } = validatedCategory
-    console.log('Datos para insertar en la base de datos:', category_name, category_description, category_image)
+    const categoryName = validatedCategory.category_name
+    const categoryDescription = validatedCategory.category_description
+    const categoryImage = validatedCategory.category_image
+
+    console.log('Datos para insertar en la base de datos:', categoryName, categoryDescription, categoryImage)
 
     // Generamos el UUID
     const categoryId = randomUUID()
 
     // Revisa si hay algo raro con los tipos de datos antes de enviarlos
-    console.log('Insertando en la base de datos:', categoryId, category_name, category_description, category_image)
+    console.log('Insertando en la base de datos:', categoryId, categoryName, categoryDescription, categoryImage)
 
     try {
       const result = await db.execute(
         'INSERT INTO categories (categories_id, category_name, category_description, category_image) VALUES (?, ?, ?, ?) RETURNING categories_id',
-        [categoryId, category_name, category_description, category_image]
+        [categoryId, categoryName, categoryDescription, categoryImage]
       )
 
       return {
@@ -65,7 +67,10 @@ export class CategoriesModel {
   static async update ({ id, input }) {
     const validatedCategory = categoriesSchema.partial().parse(input)
 
-    const { categoryName, categoryDescription, categoryImage } = validatedCategory
+    const categoryName = validatedCategory.category_name
+    const categoryDescription = validatedCategory.category_description
+    const categoryImage = validatedCategory.category_image
+
     await db.execute(
       'UPDATE categories SET category_name = ?, category_description = ?, category_image = ? WHERE categories_id = ?',
       [categoryName, categoryDescription, categoryImage, id]

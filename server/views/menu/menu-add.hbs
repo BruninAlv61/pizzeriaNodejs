@@ -5,32 +5,51 @@
 <main class="main">
   <h1 class="main-title">Adding Food</h1>
   <form class="main-form" action="/menu" method="POST">
-    <label for="productName">Name</label>
+    <label for="product_name">Name</label>
     <input
-      id="productName"
+      id="product_name"
       type="text"
-      name="productName"
+      name="product_name"
       placeholder="Product name"
       autocomplete="off"
     />
-    <label for="category">Category</label>
-    <select id="category" name="category">
+
+    <label for="product_description">Description</label>
+      <textarea
+        id="product_description"
+        name="product_description"
+        placeholder="Product description"
+        autocomplete="off"
+      ></textarea>
+
+
+    <label for="category_id">Category</label>
+    <select id="category_id" name="category_id">
       {{#each categories}}
-        <option value="{{categoryName}}">{{categoryName}}</option>
+        <option value="{{categories_id}}">{{category_name}}</option>
       {{/each}}
     </select>
-    <label for="price">Price</label>
+
+    <label for="product_price">Price</label>
     <input
-      id="price"
+      id="product_price"
       type="number"
-      name="price"
+      name="product_price"
       placeholder="Price"
       step="0.01"
       autocomplete="off"
       required
     />
-    <label for="image">Image</label>
-    <input id="image" type="text" name="image" autocomplete="off" placeholder="Image URL" />
+
+    <label for="product_image">Image</label>
+    <input
+      id="product_image"
+      type="text"
+      name="product_image"
+      autocomplete="off"
+      placeholder="Image URL"
+    />
+
     <button type="submit">Save</button>
   </form>
 </main>
