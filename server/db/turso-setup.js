@@ -20,3 +20,13 @@ await db.execute(`
     FOREIGN KEY (category_id) REFERENCES categories(categories_id)
   )
 `)
+
+await db.execute(`
+  CREATE TABLE IF NOT EXISTS branches (
+    branch_id TEXT PRIMARY KEY,
+    province TEXT NOT NULL,
+    locality TEXT NOT NULL,
+    address TEXT NOT NULL,
+    phone_number TEXT NOT NULL
+  )
+`)

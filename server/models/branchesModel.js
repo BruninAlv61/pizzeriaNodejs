@@ -1,52 +1,53 @@
-import { connectBranches } from '../db/connection.js'
-import { ObjectId } from 'mongodb'
+import { db } from '../db/connection-turso.js'
+import { randomUUID } from 'node:crypto'
 
 export class BranchesModel {
   static async getAll () {
-    const db = await connectBranches()
-    return db.find({}).toArray()
+    const result = await db.execute('SELECT * FROM branches')
+    return result.rows
   }
 
   static async create ({ input }) {
-    const db = await connectBranches()
-    const { insertedId } = await db.insertOne(input)
+    const id = randomUUID()
+
+    await db.execute(
+      `INSERT INTO branches (branch_id, province, locality, address, phone_number)
+       VALUES (?, ?, ?, ?, ?)`,
+      [id, input.province, input.locality, input.address, input.phone_number]
+    )
 
     return {
-      id: insertedId,
+      branch_id: id,
       ...input
     }
   }
 
   static async getById ({ id }) {
-    const db = await connectBranches()
-    // Validate that the ID is a valid ObjectId
-    if (!ObjectId.isValid(id)) {
-      throw new Error('The provided ID is not valid')
-    }
+    const result = await db.execute(
+      'SELECT * FROM branches WHERE branch_id = ?',
+      [id]
+    )
 
-    const objectId = new ObjectId(id)
-    return db.findOne({ _id: objectId })
+    return result.rows[0]
   }
 
   static async update ({ id, input }) {
-    const db = await connectBranches()
-    const objectId = new ObjectId(id)
-
-    const { ok, value } = await db.findOneAndUpdate(
-      { _id: objectId },
-      { $set: input },
-      { returnNewDocument: true }
+    await db.execute(
+      `UPDATE branches
+       SET province = ?, locality = ?, address = ?, phone_number = ?
+       WHERE branch_id = ?`,
+      [input.province, input.locality, input.address, input.phone_number, id]
     )
 
-    if (!ok) return false
-
-    return value
+    return this.getById({ id }) // Devolver el branch actualizado
   }
 
   static async delete ({ id }) {
-    const db = await connectBranches()
-    const objectId = new ObjectId(id)
-    const { deletedCount } = await db.deleteOne({ _id: objectId })
-    return deletedCount > 0
+    const result = await db.execute(
+      'DELETE FROM branches WHERE branch_id = ?',
+      [id]
+    )
+
+    return result.rowsAffected > 0
   }
 }

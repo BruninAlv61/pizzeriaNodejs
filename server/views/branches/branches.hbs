@@ -3,28 +3,32 @@
 {{/contentFor}}
 
 <main class="main">
+  <h1>Branches</h1>
+  <a class="main-addBtn" href="/branches/add">Add Branch +</a>
 
-<h1>Branches</h1>
-<a class="main-addBtn" href="/branches/add">Add Branch +</a>
-
-{{#if branches}}
-<div class="main-list">
-    {{#each branches}}
-            <h4 class="main-list-item">{{branchName}}</h4> 
-            <div class="main-list-btns main-list-item">
-              <a href="/branches/edit/{{_id}}"><img src="/assets/pen.png" alt="edit icon"></a>
-              <button onclick="deleteBranch('{{_id}}')">
-                <img src="/assets/bin.png" alt="delete icon">
-              </button>
-            </div>
-    {{/each}}
-    {{else}}
-    
-</div>
-    <div>
-        <h4>No branches added</h4>
+  {{#if branches.length}}
+    <div class="main-list">
+      {{#each branches}}
+        
+          <h4 class="main-list-item">
+            {{province}} - {{locality}}
+          </h4>
+          <div class="main-list-btns main-list-item">
+            <a href="/branches/edit/{{branch_id}}">
+              <img src="/assets/pen.png" alt="edit icon">
+            </a>
+            <button onclick="deleteBranch('{{branch_id}}')">
+              <img src="/assets/bin.png" alt="delete icon">
+            </button>
+          </div>
+       
+      {{/each}}
     </div>
-    {{/if}}
+  {{else}}
+    <div>
+      <h4>No branches added</h4>
+    </div>
+  {{/if}}
 </main>
 
 <script>
@@ -32,7 +36,7 @@
     const confirmDelete = confirm("Are you sure you want to delete this branch?");
     if (confirmDelete) {
       await fetch(`/branches/${id}`, { method: 'DELETE' });
-      location.reload(); // Reload the page to reflect changes
+      location.reload(); // Refresh after deletion
     }
   }
 </script>

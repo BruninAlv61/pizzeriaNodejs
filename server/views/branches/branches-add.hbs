@@ -3,16 +3,26 @@
 {{/contentFor}}
 
 <main class='main'>
-  <h1 class='main-title'>Branches</h1>
+  <h1 class='main-title'>Add Branch</h1>
   <form class='main-form' action='/branches' method='post'>
-    <label for='branchName'>Branch Name</label>
+    <label for='province'>Province</label>
     <input
       type='text'
-      id='branchName'
-      name='branchName'
+      id='province'
+      name='province'
       autocomplete='off'
-      placeholder='Branch Name'
+      placeholder='Province'
     />
+
+    <label for='locality'>Locality</label>
+    <input
+      type='text'
+      id='locality'
+      name='locality'
+      autocomplete='off'
+      placeholder='Locality'
+    />
+
     <label for='address'>Address</label>
     <input
       type='text'
@@ -21,22 +31,16 @@
       autocomplete='off'
       placeholder='Branch Address'
     />
-    <label for='phone'>Phone</label>
+
+    <label for='phone_number'>Phone Number</label>
     <input
       type='text'
-      id='phone'
-      name='phone'
+      id='phone_number'
+      name='phone_number'
       autocomplete='off'
-      placeholder='Branch Phone'
+      placeholder='Branch Phone Number'
     />
-    <label for='schedule'>Schedule</label>
-    <input
-      type='text'
-      id='schedule'
-      name='schedule'
-      autocomplete='off'
-      placeholder='Branch Schedule'
-    />
+
     <button type='submit'>Save</button>
   </form>
 </main>
