@@ -30,3 +30,24 @@ await db.execute(`
     phone_number TEXT NOT NULL
   )
 `)
+
+await db.execute(`
+  CREATE TABLE IF NOT EXISTS combo_offers (
+    combo_offers_id TEXT PRIMARY KEY,
+    combo_offers_name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    price REAL NOT NULL,
+    combo_offers_image TEXT NOT NULL
+  )
+`)
+
+await db.execute(`
+  CREATE TABLE IF NOT EXISTS combo_offer_menu (
+    combo_offer_menu_id TEXT PRIMARY KEY,
+    combo_offers_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (combo_offers_id) REFERENCES combo_offers(combo_offers_id),
+    FOREIGN KEY (product_id) REFERENCES menu(product_id)
+  )
+`)

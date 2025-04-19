@@ -1,13 +1,25 @@
 import { validateComboOffers, validateComboOffersPartial } from '../schemas/comboOffers.js'
 
 export class ComboOffersController {
-  constructor ({ comboOffersModel }) {
+  constructor ({ comboOffersModel, menuModel }) {
     this.comboOffersModel = comboOffersModel
+    this.menuModel = menuModel
   }
 
   getAll = async (req, res) => {
     const comboOffers = await this.comboOffersModel.getAll()
     res.render('combo-offers/combo-offers.hbs', { comboOffers })
+  }
+
+  getAddComboOfferPage = async (req, res) => {
+    try {
+      const categoryId = req.query.categoryId // Si tienes un parámetro de query categoryId
+      const menu = await this.menuModel.getAll({ categoryId }) // Pasar categoryId como objeto
+      res.render('combo-offers/combo-offers-add', { products: menu }) // Pasar los productos a la vista
+    } catch (error) {
+      console.error('Error al obtener los productos:', error)
+      res.status(500).send('Error al obtener los productos')
+    }
   }
 
   create = async (req, res) => {
@@ -50,6 +62,12 @@ export class ComboOffersController {
       return res.status(404).send('Combo offer not found')
     }
 
-    res.render('combo-offers/combo-offers-edit', { comboOffer, currentPath: req.path })
+    const menu = await this.menuModel.getAll()
+
+    res.render('combo-offers/combo-offers-edit', {
+      comboOffer,
+      menu,
+      currentPath: req.path
+    })
   }
 }

@@ -8,13 +8,12 @@
   <div class='main-list'>
     {{#if comboOffers}}
       {{#each comboOffers}}
-        <h4 class='main-list-item'>{{comboOfferName}}</h4>
+        <h4 class='main-list-item'>{{combo_offers_name}}</h4>
         <div class='main-list-btns main-list-item'>
-          <a href='/combo-offers/edit/{{_id}}'><img
-              src='/assets/pen.png'
-              alt='Edit icon'
-            /></a>
-          <button onclick="deleteComboOffer('{{_id}}')">
+          <a href='/combo-offers/edit/{{combo_offers_id}}'>
+            <img src='/assets/pen.png' alt='Edit icon' />
+          </a>
+          <button onclick="deleteComboOffer('{{combo_offers_id}}')">
             <img src='/assets/bin.png' alt='Delete icon' />
           </button>
         </div>
@@ -26,11 +25,11 @@
 </main>
 
 <script>
-    async function deleteComboOffer(id) {
-        const confirmDelete = confirm("Are you sure you want to delete this combo offer?");
-        if (confirmDelete) {
-            await fetch(`/combo-offers/${id}`, { method: 'DELETE' });
-            location.reload(); // Reload page to reflect changes
-        }
+  async function deleteComboOffer(id) {
+    const confirmDelete = confirm("Are you sure you want to delete this combo offer?");
+    if (confirmDelete) {
+      await fetch(`/combo-offers/${id}`, { method: 'DELETE' });
+      location.reload(); // Reload page to reflect changes
     }
+  }
 </script>
