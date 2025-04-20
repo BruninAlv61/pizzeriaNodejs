@@ -24,25 +24,27 @@ export class ComboOffersModel {
   }
 
   static async create ({ input }) {
-    const combo_offers_id = randomUUID()
     const {
       combo_offers_name,
       description,
       price,
       combo_offers_image,
-      products // array de { product_id, quantity }
+      products
     } = input
 
-    // Inserción en combo_offers
+    const combo_offers_id = randomUUID()
+
+    // Insertar combo en tabla combo_offers
     await db.execute(
       `INSERT INTO combo_offers (combo_offers_id, combo_offers_name, description, price, combo_offers_image)
        VALUES (?, ?, ?, ?, ?)`,
       [combo_offers_id, combo_offers_name, description, price, combo_offers_image]
     )
 
-    // Inserción en combo_offer_menu
-    for (const { product_id, quantity } of products) {
+    // Insertar productos en tabla combo_offer_menu
+    for (const { id: product_id, quantity } of products) {
       const combo_offer_menu_id = randomUUID()
+
       await db.execute(
         `INSERT INTO combo_offer_menu (combo_offer_menu_id, combo_offers_id, product_id, quantity)
          VALUES (?, ?, ?, ?)`,
@@ -50,14 +52,7 @@ export class ComboOffersModel {
       )
     }
 
-    return {
-      combo_offers_id,
-      combo_offers_name,
-      description,
-      price,
-      combo_offers_image,
-      products
-    }
+    return { combo_offers_id }
   }
 
   static async delete ({ id }) {

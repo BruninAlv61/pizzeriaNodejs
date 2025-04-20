@@ -13,7 +13,26 @@ const comboOffersSchema = z.object({
   ]).refine((val) => !isNaN(val) && val >= 0, {
     message: 'The price must be a positive number'
   }),
-  combo_offers_image: z.string().url('Must be a valid image URL')
+  combo_offers_image: z.string().url('Must be a valid image URL'),
+  products: z
+    .string()
+    .nonempty({ message: 'Products must not be empty' })
+    .transform((val) => {
+      const parsed = JSON.parse(val)
+      if (!Array.isArray(parsed)) {
+        throw new Error('Products must be an array')
+      }
+      return parsed
+    })
+    .refine((arr) =>
+      arr.every(
+        (item) =>
+          typeof item.id === 'string' &&
+          item.id.length > 0 &&
+          typeof item.quantity === 'number' &&
+          item.quantity > 0
+      ),
+    { message: 'Each product must have an id and quantity > 0' })
 })
 
 export const validateComboOffers = (input) => {

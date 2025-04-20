@@ -39,6 +39,8 @@
     <label for='combo_offers_image'>Image URL</label>
     <input type='url' name='combo_offers_image' id='combo_offers_image' required />
 
+    <input type="hidden" name="products" id="products" value="">
+
     <div id='product_list' class='product-tags'>
       
     </div>
@@ -55,6 +57,7 @@
   const closeModalBtn = document.querySelector('.close-modal')
   const addProductBtns = document.querySelectorAll('.add-product-btn')
   const productsContainer = document.querySelector('.products-container')
+  const productsInput = document.getElementById('products')
 
   let products = []
 
@@ -66,7 +69,7 @@
     productModal.classList.add('hidden')
   })
 
-  // Agregar producto (sumar)
+  // Adding product
   addProductBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.id
@@ -78,7 +81,7 @@
       } else {
         products.push({ id, name, quantity: 1 })
       }
-
+      updateProductsInput()
       renderProducts()
       updateModalQuantities()
     })
@@ -95,17 +98,22 @@
         if (product.quantity <= 0) {
           products = products.filter(p => p.id !== id)
         }
+        updateProductsInput()
         renderProducts()
         updateModalQuantities()
       }
     }
   })
 
+  function updateProductsInput() {
+    productsInput.value = JSON.stringify(products.map(p => ({ id: p.id, quantity: p.quantity })))
+    console.log(productsInput.value)
+  }
+
   function renderProducts() {
     productList.innerHTML = products.map(product => `
       <span class="product-tag">
         ${product.name} x${product.quantity}
-        <input type="hidden" name="products[]" value="${product.id}:${product.quantity}" />
       </span>
     `).join('')
   }
