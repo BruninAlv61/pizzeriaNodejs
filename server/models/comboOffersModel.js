@@ -8,18 +8,46 @@ export class ComboOffersModel {
   }
 
   static async getById ({ id }) {
-    const result = await db.execute('SELECT * FROM combo_offers WHERE combo_offers_id = ?', [id])
-    const comboOffer = result.rows[0] // Solo hay un resultado para el ID
+    const result = await db.execute(
+      'SELECT * FROM combo_offers WHERE combo_offers_id = ?',
+      [id]
+    )
+    const comboOffer = result.rows[0]
     if (!comboOffer) return null
 
     const menuItemsResult = await db.execute(
       'SELECT * FROM combo_offer_menu WHERE combo_offers_id = ?',
       [id]
     )
+    const comboOfferMenu = menuItemsResult.rows
+
+    const productIds = comboOfferMenu.map(item => item.product_id)
+
+    if (productIds.length === 0) {
+      return {
+        ...comboOffer,
+        products: []
+      }
+    }
+
+    const placeholders = productIds.map(() => '?').join(', ')
+    const productsResult = await db.execute(
+      `SELECT product_id, product_name FROM menu WHERE product_id IN (${placeholders})`,
+      productIds
+    )
+
+    const productMap = Object.fromEntries(
+      productsResult.rows.map(product => [product.product_id, product.product_name])
+    )
+
+    const formattedProducts = comboOfferMenu.map(item => ({
+      ...item,
+      name: productMap[item.product_id] || 'Producto desconocido'
+    }))
 
     return {
       ...comboOffer,
-      products: menuItemsResult.rows // Los productos del combo
+      products: formattedProducts
     }
   }
 
@@ -71,6 +99,8 @@ export class ComboOffersModel {
       combo_offers_image,
       products
     } = input
+
+    console.log(input)
 
     // Actualizar combo_offers
     await db.execute(

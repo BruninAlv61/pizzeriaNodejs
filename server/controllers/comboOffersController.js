@@ -58,6 +58,8 @@ export class ComboOffersController {
     const { id } = req.params
     const comboOffer = await this.comboOffersModel.getById({ id })
 
+    console.log(comboOffer)
+
     if (!comboOffer) {
       return res.status(404).send('Combo offer not found')
     }
@@ -65,7 +67,7 @@ export class ComboOffersController {
     const menu = await this.menuModel.getAll()
 
     res.render('combo-offers/combo-offers-edit', {
-      comboOffer,
+      combo_offer: comboOffer,
       menu,
       currentPath: req.path
     })

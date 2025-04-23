@@ -3,7 +3,7 @@ import { menuSchema, partialMenuSchema } from '../schemas/menu.js'
 import { randomUUID } from 'crypto'
 
 export class MenuModel {
-  static async getAll ({ categoryId }) {
+  static async getAll ({ categoryId } = {}) {
     let query = `SELECT * FROM menu
                  JOIN categories ON menu.category_id = categories.categories_id`
     const params = []
