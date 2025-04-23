@@ -113,7 +113,7 @@ export class ComboOffersModel {
     // Eliminar y volver a insertar los productos del combo
     await db.execute('DELETE FROM combo_offer_menu WHERE combo_offers_id = ?', [id])
 
-    for (const { product_id, quantity } of products) {
+    for (const { id: product_id, quantity } of products) {
       const combo_offer_menu_id = randomUUID()
       await db.execute(
         `INSERT INTO combo_offer_menu (combo_offer_menu_id, combo_offers_id, product_id, quantity)

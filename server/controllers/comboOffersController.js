@@ -51,7 +51,7 @@ export class ComboOffersController {
     const { id } = req.params
     await this.comboOffersModel.update({ id, input: result.data })
 
-    res.redirect('/combo-offers')
+    res.json({ ok: true })
   }
 
   renderEditForm = async (req, res) => {

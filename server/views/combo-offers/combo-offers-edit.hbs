@@ -166,7 +166,7 @@
     const description = document.getElementById('combo_offers_description').value
     const price = parseFloat(document.getElementById('combo_offers_price').value)
     const combo_offers_image = document.getElementById('combo_offers_image').value
-    const products = JSON.parse(productsInput.value)
+    const products = productsInput.value
 
     try {
       const response = await fetch(`/combo-offers/${combo_offers_id}`, {
