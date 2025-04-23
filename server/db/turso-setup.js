@@ -51,3 +51,12 @@ await db.execute(`
     FOREIGN KEY (product_id) REFERENCES menu(product_id)
   )
 `)
+
+await db.execute(`
+  CREATE TABLE IF NOT EXISTS admin (
+    admin_id    TEXT PRIMARY KEY,
+    admin_name  TEXT NOT NULL,
+    email       TEXT UNIQUE NOT NULL,
+    password    TEXT NOT NULL 
+  )
+`)

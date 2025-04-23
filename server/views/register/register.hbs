@@ -4,13 +4,40 @@
 
 <main class="loginMain">
   <h1 class="loginMain-tittle">Register</h1>
-
+  
   <form class="loginMain-form" action="/register" method="POST">
-    <label for="username">Username</label>
-    <input type="text" name="username" autocomplete="off" placeholder="Enter your username" id="username" />
+    
+    <label for="admin_name">Name</label>
+    <input
+      type="text"
+      id="admin_name"
+      name="admin_name"
+      placeholder="Enter your name"
+      autocomplete="off"
+      required
+    />
+
+    <label for="email">E‑mail</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      placeholder="Enter your e‑mail"
+      autocomplete="off"
+      required
+    />
+
     <label for="password">Password</label>
-    <input type="password" placeholder="Enter your password" autocomplete="off" name="password" id="password" />
-    <button type="submit">Sign Up</button>
-    <a href="/login">Log in</a>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="Enter your password"
+      autocomplete="off"
+      required
+    />
+
+    <button type="submit">Sign Up</button>
+    <a href="/login">Log in</a>
   </form>
 </main>
