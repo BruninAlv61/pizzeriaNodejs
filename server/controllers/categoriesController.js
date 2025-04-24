@@ -1,4 +1,5 @@
 import { categoriesSchema, partialCategoriesSchema } from '../schemas/categories.js'
+import { adminMiddleware } from '../middlewares/adminMiddleware.js'
 
 export class CategoriesController {
   constructor ({ categoriesModel }) {
@@ -8,9 +9,11 @@ export class CategoriesController {
   getAll = async (req, res) => {
     const categories = await this.categoriesModel.getAll()
     res.render('categories/categories.hbs', { categories })
+    adminMiddleware(req, res)
   }
 
   getById = async (req, res) => {
+    adminMiddleware(req, res)
     try {
       const { id } = req.params
       const category = await this.categoriesModel.getById({ id })
@@ -27,6 +30,7 @@ export class CategoriesController {
   }
 
   create = async (req, res) => {
+    adminMiddleware(req, res)
     const result = categoriesSchema.safeParse(req.body)
 
     if (!result.success) {
@@ -38,6 +42,7 @@ export class CategoriesController {
   }
 
   delete = async (req, res) => {
+    adminMiddleware(req, res)
     const { id } = req.params
 
     const result = await this.categoriesModel.delete({ id })
@@ -50,6 +55,7 @@ export class CategoriesController {
   }
 
   update = async (req, res) => {
+    adminMiddleware(req, res)
     const result = partialCategoriesSchema.safeParse(req.body)
 
     if (!result.success) {
@@ -63,6 +69,7 @@ export class CategoriesController {
   }
 
   renderEditForm = async (req, res) => {
+    adminMiddleware(req, res)
     const { id } = req.params
     const category = await this.categoriesModel.getById({ id })
 

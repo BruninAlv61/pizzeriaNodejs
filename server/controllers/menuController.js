@@ -1,4 +1,5 @@
 import { menuSchema, partialMenuSchema } from '../schemas/menu.js'
+import { adminMiddleware } from '../middlewares/adminMiddleware.js'
 
 export class MenuController {
   constructor ({ menuModel, categoriesModel }) { // Added categoriesModel
@@ -7,17 +8,20 @@ export class MenuController {
   }
 
   renderAddForm = async (req, res) => {
+    adminMiddleware(req, res)
     const categories = await this.categoriesModel.getAll() // Get all categories
     res.render('menu/menu-add', { categories }) // Pass them to the view
   }
 
   getAll = async (req, res) => {
+    adminMiddleware(req, res)
     const { categoryId } = req.query
     const products = await this.menuModel.getAll({ categoryId })
     res.render('menu/menu.hbs', { products })
   }
 
   getById = async (req, res) => {
+    adminMiddleware(req, res)
     try {
       const { id } = req.params
       const product = await this.menuModel.getById({ id })
@@ -34,6 +38,7 @@ export class MenuController {
   }
 
   create = async (req, res) => {
+    adminMiddleware(req, res)
     const result = menuSchema.safeParse(req.body)
 
     if (!result.success) {
@@ -45,6 +50,7 @@ export class MenuController {
   }
 
   delete = async (req, res) => {
+    adminMiddleware(req, res)
     const { id } = req.params
 
     const result = await this.menuModel.delete({ id })
@@ -57,6 +63,7 @@ export class MenuController {
   }
 
   update = async (req, res) => {
+    adminMiddleware(req, res)
     const result = partialMenuSchema.safeParse(req.body)
 
     if (!result.success) {
@@ -70,6 +77,7 @@ export class MenuController {
   }
 
   renderEditForm = async (req, res) => {
+    adminMiddleware(req, res)
     const { id } = req.params
 
     const product = await this.menuModel.getById({ id })

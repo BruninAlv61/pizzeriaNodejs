@@ -1,4 +1,5 @@
 import { validateComboOffers, validateComboOffersPartial } from '../schemas/comboOffers.js'
+import { adminMiddleware } from '../middlewares/adminMiddleware.js'
 
 export class ComboOffersController {
   constructor ({ comboOffersModel, menuModel }) {
@@ -7,11 +8,13 @@ export class ComboOffersController {
   }
 
   getAll = async (req, res) => {
+    adminMiddleware(req, res)
     const comboOffers = await this.comboOffersModel.getAll()
     res.render('combo-offers/combo-offers.hbs', { comboOffers })
   }
 
   getAddComboOfferPage = async (req, res) => {
+    adminMiddleware(req, res)
     try {
       const categoryId = req.query.categoryId // Si tienes un parámetro de query categoryId
       const menu = await this.menuModel.getAll({ categoryId }) // Pasar categoryId como objeto
@@ -23,6 +26,7 @@ export class ComboOffersController {
   }
 
   create = async (req, res) => {
+    adminMiddleware(req, res)
     const result = validateComboOffers(req.body)
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
@@ -33,6 +37,7 @@ export class ComboOffersController {
   }
 
   delete = async (req, res) => {
+    adminMiddleware(req, res)
     const { id } = req.params
     const result = await this.comboOffersModel.delete({ id })
 
@@ -43,6 +48,7 @@ export class ComboOffersController {
   }
 
   update = async (req, res) => {
+    adminMiddleware(req, res)
     const result = validateComboOffersPartial(req.body)
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
@@ -55,6 +61,7 @@ export class ComboOffersController {
   }
 
   renderEditForm = async (req, res) => {
+    adminMiddleware(req, res)
     const { id } = req.params
     const comboOffer = await this.comboOffersModel.getById({ id })
 
