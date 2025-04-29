@@ -1,0 +1,40 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/manage-table.css">
+{{/contentFor}}
+
+<main class="main">
+  <h1>Orders</h1>
+  <a class="main-addBtn" href="/orders/add">Add Order +</a>
+
+  {{#if orders.length}}
+    <div class="main-list">
+      {{#each orders}}
+        <h4 class="main-list-item">
+          {{customer_name}} {{customer_lastname}} - ${{total_price}} - {{province}}, {{locality}} - {{order_status}}
+        </h4>
+        <div class="main-list-btns main-list-item">
+          <a href="/orders/edit/{{order_id}}">
+            <img src="/assets/pen.png" alt="edit icon">
+          </a>
+          <button onclick="deleteOrder('{{order_id}}')">
+            <img src="/assets/bin.png" alt="delete icon">
+          </button>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <div>
+      <h4>No orders added</h4>
+    </div>
+  {{/if}}
+</main>
+
+<script>
+  async function deleteOrder(id) {
+    const confirmDelete = confirm("Are you sure you want to delete this order?");
+    if (confirmDelete) {
+      await fetch(`/orders/${id}`, { method: 'DELETE' });
+      location.reload(); // Refresh after deletion
+    }
+  }
+</script>

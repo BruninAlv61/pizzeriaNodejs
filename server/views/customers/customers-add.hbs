@@ -1,0 +1,55 @@
+{{#contentFor 'styles'}}
+  <link rel='stylesheet' href='/css/manage-form.css' />
+{{/contentFor}}
+
+<main class='main'>
+  <h1 class='main-title'>Add Customer</h1>
+  <form class='main-form' action='/customers' method='post'>
+    <label for='name'>Name</label>
+    <input
+      type='text'
+      id='name'
+      name='name'
+      autocomplete='off'
+      placeholder='Name'
+    />
+    
+    <label for='lastname'>Last Name</label>
+    <input
+      type='text'
+      id='lastname'
+      name='lastname'
+      autocomplete='off'
+      placeholder='Last Name'
+    />
+    
+    <label for='email'>Email</label>
+    <input
+      type='email'
+      id='email'
+      name='email'
+      autocomplete='off'
+      placeholder='Email Address'
+    />
+    
+    <label for='password'>Password</label>
+    <input
+      type='password'
+      id='password'
+      name='password'
+      autocomplete='off'
+      placeholder='Password'
+    />
+    
+    <label for='phone_number'>Phone Number</label>
+    <input
+      type='text'
+      id='phone_number'
+      name='phone_number'
+      autocomplete='off'
+      placeholder='Phone Number'
+    />
+    
+    <button type='submit'>Save</button>
+  </form>
+</main>

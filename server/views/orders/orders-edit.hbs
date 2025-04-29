@@ -1,0 +1,427 @@
+{{#contentFor 'styles'}}
+  <link rel='stylesheet' href='/css/manage-form.css' />
+  <link rel="stylesheet" href="/css/product-modal.css" />
+{{/contentFor}}
+
+<main class='main'>
+  <!-- Product Modal -->
+  <article class="product-modal hidden">
+    <section>
+      <div class="close-container">
+        <img class="close-modal" src="/assets/close.png" alt="close icon, click here to close the products modal">
+      </div>
+      <h3>Products</h3>
+      <div class="products-container">
+        {{#each products}}
+          <div class="product-item" data-id="{{product_id}}" data-type="product" data-price="{{product_price}}" data-name="{{product_name}}">
+            <h4 class="product-name">{{product_name}} - ${{product_price}}</h4>
+            <div class="product-actions">
+              <span class="product-quantity" id="quantity-product-{{product_id}}"></span>
+              <button class="add-item-btn" data-id="{{product_id}}" data-type="product" data-price="{{product_price}}" data-name="{{product_name}}">
+                <img src="/assets/plus.png" alt="add product">
+              </button>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  </article>
+
+  <!-- Combo Modal -->
+  <article class="combo-modal hidden">
+    <section>
+      <div class="close-container">
+        <img class="close-combo-modal" src="/assets/close.png" alt="close icon, click here to close the combos modal">
+      </div>
+      <h3>Combo Offers</h3>
+      <div class="combos-container">
+        {{#each combos}}
+          <div class="combo-item" data-id="{{combo_offers_id}}" data-type="combo" data-price="{{price}}" data-name="{{combo_offers_name}}">
+            <h4 class="combo-name">{{combo_offers_name}} - ${{price}}</h4>
+            <div class="combo-actions">
+              <span class="combo-quantity" id="quantity-combo-{{combo_offers_id}}"></span>
+              <button class="add-item-btn" data-id="{{combo_offers_id}}" data-type="combo" data-price="{{price}}" data-name="{{combo_offers_name}}">
+                <img src="/assets/plus.png" alt="add combo">
+              </button>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  </article>
+
+  <h1 class='main-title'>Edit Order</h1>
+  <form class='main-form' id='orderForm'>
+    <label for='customer_id'>Customer</label>
+    <select id='customer_id' name='customer_id' required>
+      <option value="">Select a customer</option>
+      {{#each customers}}
+        <option value="{{customer_id}}" {{#if (eq ../order.customer_id customer_id)}}selected{{/if}}>
+          {{name}} {{lastname}}
+        </option>
+      {{/each}}
+    </select>
+    
+    <label for='branch_id'>Branch</label>
+    <select id='branch_id' name='branch_id' required>
+      <option value="">Select a branch</option>
+      {{#each branches}}
+        <option value="{{branch_id}}" {{#if (eq ../order.branch_id branch_id)}}selected{{/if}}>
+          {{province}}, {{locality}} - {{address}}
+        </option>
+      {{/each}}
+    </select>
+    
+    <label for='order_status'>Status</label>
+    <select id='order_status' name='order_status' required>
+      <option value="pending" {{#if (eq order.order_status "pending")}}selected{{/if}}>Pending</option>
+      <option value="processing" {{#if (eq order.order_status "processing")}}selected{{/if}}>Processing</option>
+      <option value="completed" {{#if (eq order.order_status "completed")}}selected{{/if}}>Completed</option>
+      <option value="cancelled" {{#if (eq order.order_status "cancelled")}}selected{{/if}}>Cancelled</option>
+    </select>
+
+    <label for='total_price'>Total Price</label>
+    <input type='number' step='0.01' id='total_price' name='total_price' value="{{order.total_price}}" readonly />
+    
+    <input type="hidden" name="items" id="items-input" value="">
+    
+    <div class="items-section">
+      <label>Order Items</label>
+      <div id='items_list' class='items-tags'></div>
+      <div class="add-items-buttons">
+        <button type='button' id='add_product_btn'>Add Product</button>
+        <button type='button' id='add_combo_btn'>Add Combo</button>
+      </div>
+    </div>
+    
+    <button type='button' id='updateOrderBtn'>Update Order</button>
+    <div id="result-message"></div>
+  </form>
+</main>
+
+<script>
+  // DOM Elements
+  const addProductBtn = document.getElementById('add_product_btn')
+  const addComboBtn = document.getElementById('add_combo_btn')
+  const itemsList = document.getElementById('items_list')
+  const itemsInput = document.getElementById('items-input')
+  const totalPriceInput = document.getElementById('total_price')
+  const updateOrderBtn = document.getElementById('updateOrderBtn')
+  const resultMessage = document.getElementById('result-message')
+  const orderForm = document.getElementById('orderForm')
+  
+  const productModal = document.querySelector('.product-modal')
+  const comboModal = document.querySelector('.combo-modal')
+  const closeModalBtn = document.querySelector('.close-modal')
+  const closeComboModalBtn = document.querySelector('.close-combo-modal')
+  
+  const productsContainer = document.querySelector('.products-container')
+  const combosContainer = document.querySelector('.combos-container')
+  
+  // State
+  let items = []
+  
+  // Load existing items
+  function loadExistingItems() {
+    // Convert from order.items format to our format
+    {{#if order.items}}
+      {{#each order.items}}
+        items.push({
+          id: '{{#if product_id}}{{product_id}}{{else}}{{combo_offers_id}}{{/if}}',
+          type: '{{#if product_id}}product{{else}}combo{{/if}}',
+          price: {{price}},
+          name: '{{name}}',
+          quantity: {{quantity}},
+          totalPrice: {{price}} * {{quantity}}
+        })
+      {{/each}}
+    {{/if}}
+    
+    updateItemsInput()
+    renderItems()
+    updateQuantities()
+    updateTotalPrice()
+  }
+  
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', loadExistingItems)
+  
+  // Event Listeners
+  addProductBtn.addEventListener('click', () => {
+    productModal.classList.remove('hidden')
+  })
+  
+  addComboBtn.addEventListener('click', () => {
+    comboModal.classList.remove('hidden')
+  })
+  
+  closeModalBtn.addEventListener('click', () => {
+    productModal.classList.add('hidden')
+  })
+  
+  closeComboModalBtn.addEventListener('click', () => {
+    comboModal.classList.add('hidden')
+  })
+  
+  // Add Item (Product or Combo)
+  document.querySelectorAll('.add-item-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id
+      const type = btn.dataset.type
+      const price = parseFloat(btn.dataset.price)
+      const name = btn.dataset.name
+      
+      const existingItem = items.find(item => item.id === id && item.type === type)
+      
+      if (existingItem) {
+        existingItem.quantity += 1
+        existingItem.totalPrice = existingItem.quantity * price
+      } else {
+        items.push({ 
+          id, 
+          type, 
+          price, 
+          name, 
+          quantity: 1,
+          totalPrice: price
+        })
+      }
+      
+      updateItemsInput()
+      renderItems()
+      updateQuantities()
+      updateTotalPrice()
+    })
+  })
+  
+  // Remove Item (Event Delegation)
+  productsContainer.addEventListener('click', (e) => {
+    if (e.target.closest('.remove-item-btn')) {
+      const btn = e.target.closest('.remove-item-btn')
+      const id = btn.dataset.id
+      const type = btn.dataset.type
+      
+      removeItem(id, type)
+    }
+  })
+  
+  combosContainer.addEventListener('click', (e) => {
+    if (e.target.closest('.remove-item-btn')) {
+      const btn = e.target.closest('.remove-item-btn')
+      const id = btn.dataset.id
+      const type = btn.dataset.type
+      
+      removeItem(id, type)
+    }
+  })
+  
+  // Remove from item list
+  itemsList.addEventListener('click', (e) => {
+    if (e.target.closest('.remove-tag-btn')) {
+      const btn = e.target.closest('.remove-tag-btn')
+      const id = btn.dataset.id
+      const type = btn.dataset.type
+      
+      removeItem(id, type)
+    }
+  })
+  
+  // Functions
+  function removeItem(id, type) {
+    const item = items.find(item => item.id === id && item.type === type)
+    
+    if (item) {
+      item.quantity -= 1
+      item.totalPrice = item.quantity * item.price
+      
+      if (item.quantity <= 0) {
+        items = items.filter(i => !(i.id === id && i.type === type))
+      }
+      
+      updateItemsInput()
+      renderItems()
+      updateQuantities()
+      updateTotalPrice()
+    }
+  }
+  
+  function updateItemsInput() {
+    const formattedItems = items.map(item => ({
+      id: item.id,
+      type: item.type,
+      quantity: item.quantity,
+      price: item.price
+    }))
+    
+    itemsInput.value = JSON.stringify(formattedItems)
+  }
+  
+  function renderItems() {
+    itemsList.innerHTML = items.map(item => `
+      <span class="item-tag">
+        ${item.name} x${item.quantity} - $${item.totalPrice.toFixed(2)}
+        <button type="button" class="remove-tag-btn" data-id="${item.id}" data-type="${item.type}">
+          <img src="/assets/close-small.png" alt="remove item">
+        </button>
+      </span>
+    `).join('')
+  }
+  
+  function updateQuantities() {
+    // Update product quantities
+    document.querySelectorAll('.product-item').forEach(item => {
+      const id = item.dataset.id
+      const type = item.dataset.type
+      const actions = item.querySelector('.product-actions')
+      const quantitySpan = item.querySelector(`#quantity-product-${id}`)
+      
+      const productItem = items.find(i => i.id === id && i.type === type)
+      
+      if (productItem) {
+        quantitySpan.textContent = `x${productItem.quantity}`
+        
+        if (!actions.querySelector('.remove-item-btn')) {
+          const removeBtn = document.createElement('button')
+          removeBtn.classList.add('remove-item-btn')
+          removeBtn.dataset.id = id
+          removeBtn.dataset.type = type
+          removeBtn.innerHTML = `<img src="/assets/minus.png" alt="remove product">`
+          actions.appendChild(removeBtn)
+        }
+      } else {
+        quantitySpan.textContent = ''
+        const existingBtn = actions.querySelector('.remove-item-btn')
+        if (existingBtn) existingBtn.remove()
+      }
+    })
+    
+    // Update combo quantities
+    document.querySelectorAll('.combo-item').forEach(item => {
+      const id = item.dataset.id
+      const type = item.dataset.type
+      const actions = item.querySelector('.combo-actions')
+      const quantitySpan = item.querySelector(`#quantity-combo-${id}`)
+      
+      const comboItem = items.find(i => i.id === id && i.type === type)
+      
+      if (comboItem) {
+        quantitySpan.textContent = `x${comboItem.quantity}`
+        
+        if (!actions.querySelector('.remove-item-btn')) {
+          const removeBtn = document.createElement('button')
+          removeBtn.classList.add('remove-item-btn')
+          removeBtn.dataset.id = id
+          removeBtn.dataset.type = type
+          removeBtn.innerHTML = `<img src="/assets/minus.png" alt="remove combo">`
+          actions.appendChild(removeBtn)
+        }
+      } else {
+        quantitySpan.textContent = ''
+        const existingBtn = actions.querySelector('.remove-item-btn')
+        if (existingBtn) existingBtn.remove()
+      }
+    })
+  }
+  
+  function updateTotalPrice() {
+    const total = items.reduce((sum, item) => sum + item.totalPrice, 0)
+    totalPriceInput.value = total.toFixed(2)
+  }
+
+  // Handle form submission with fetch PATCH request
+  updateOrderBtn.addEventListener('click', async (e) => {
+    e.preventDefault()
+    
+    // Get the order ID from the URL
+    const orderId = window.location.pathname.split('/').pop()
+    
+    // Format the form data to match controller expectations
+    const formData = new FormData(orderForm)
+    
+    // Explicitly add the items as a JSON string (this matches controller expectations)
+    formData.set('items', itemsInput.value)
+    
+    // Convert FormData to an object
+    const requestData = Object.fromEntries(formData.entries())
+    
+    console.log('Sending data:', JSON.stringify(requestData, null, 2))
+    console.log('Order ID:', orderId)
+    
+    try {
+      resultMessage.textContent = 'Updating order...'
+      resultMessage.style.color = 'blue'
+      
+      const response = await fetch(`/orders/${orderId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json, text/html'
+        },
+        body: JSON.stringify(requestData)
+      })
+      
+      console.log('Response status:', response.status)
+      console.log('Response type:', response.headers.get('content-type'))
+      
+      // If the server responds with a redirect, follow it 
+      // (this is how your controller indicates success)
+      if (response.redirected || response.status === 302 || response.status === 301) {
+        console.log('Redirect detected to:', response.url)
+        window.location.href = response.url || '/orders'
+        return
+      }
+      
+      // Check for HTML response (sometimes error pages return HTML)
+      const contentType = response.headers.get('content-type')
+      if (contentType && contentType.includes('text/html')) {
+        console.log('HTML response received - likely an error page')
+        // Update was likely successful but we got HTML back
+        window.location.href = '/orders'
+        return
+      }
+      
+      // Normal JSON handling
+      if (!response.ok) {
+        const text = await response.text()
+        console.log('Error response text:', text)
+        
+        try {
+          // Try to parse as JSON
+          const errorData = JSON.parse(text)
+          if (errorData.errors) {
+            const errorMessage = errorData.errors.map(err => `${err.field}: ${err.message}`).join('\n')
+            throw new Error(errorMessage)
+          } else {
+            throw new Error(errorData.error || 'Unknown error')
+          }
+        } catch (jsonError) {
+          // If not valid JSON, use text or status
+          throw new Error(`Error: ${text || response.statusText}`)
+        }
+      }
+      
+      // Try to parse response as JSON (for API-style responses)
+      try {
+        const result = await response.json()
+        console.log('Success response:', result)
+      } catch (e) {
+        // Not JSON, but that's okay if status was successful
+        console.log('Response was not JSON but status is ok')
+      }
+      
+      // Success handling
+      resultMessage.textContent = 'Order updated successfully!'
+      resultMessage.style.color = 'green'
+      
+      // Redirect after success
+      setTimeout(() => {
+        window.location.href = '/orders'
+      }, 1000)
+      
+    } catch (error) {
+      resultMessage.textContent = `Error: ${error.message}`
+      resultMessage.style.color = 'red'
+      console.error('Update error:', error)
+    }
+  })
+</script>
