@@ -1,9 +1,9 @@
-import { validateOrder, validatePartialOrder } from '../schemas/ordersSchema.js'
+import { validatePhysicalSale, validatePartialPhysicalSale } from '../schemas/physicalSalesSchema.js'
 import { adminMiddleware } from '../middlewares/adminMiddleware.js'
 
-export class OrdersController {
-  constructor ({ ordersModel, customersModel, branchesModel, menuModel, comboOffersModel }) {
-    this.ordersModel = ordersModel
+export class PhysicalSalesController {
+  constructor ({ physicalSalesModel, customersModel, branchesModel, menuModel, comboOffersModel }) {
+    this.physicalSalesModel = physicalSalesModel
     this.customersModel = customersModel
     this.branchesModel = branchesModel
     this.menuModel = menuModel
@@ -13,8 +13,8 @@ export class OrdersController {
   getAll = async (req, res) => {
     adminMiddleware(req, res)
     try {
-      const orders = await this.ordersModel.getAll()
-      res.render('orders/orders', { orders })
+      const sales = await this.physicalSalesModel.getAll()
+      res.render('physical-sales/physical-sales', { sales })
     } catch (error) {
       res.status(500).json({ error: error.message })
     }
@@ -28,7 +28,7 @@ export class OrdersController {
       const products = await this.menuModel.getAll()
       const combos = await this.comboOffersModel.getAll()
 
-      res.render('orders/orders-add', {
+      res.render('physical-sales/physical-sales-add', {
         customers,
         branches,
         products,
@@ -40,6 +40,7 @@ export class OrdersController {
   }
 
   create = async (req, res) => {
+    adminMiddleware(req, res)
     try {
       // Parse items from JSON string
       const input = { ...req.body }
@@ -51,10 +52,10 @@ export class OrdersController {
       // Convert price to number
       input.total_price = Number(input.total_price)
 
-      // Add created_at
-      input.created_at = new Date().toISOString()
+      // Add sale_date
+      input.sale_date = new Date().toISOString()
 
-      const validation = validateOrder(input)
+      const validation = validatePhysicalSale(input)
 
       if (!validation.success) {
         const errors = validation.error.errors.map(error => ({
@@ -65,12 +66,12 @@ export class OrdersController {
         return res.status(400).json({ errors })
       }
 
-      const result = await this.ordersModel.create({ input: validation.data })
+      const result = await this.physicalSalesModel.create({ input: validation.data })
 
       if (result) {
-        res.redirect('/orders')
+        res.redirect('/physical-sales')
       } else {
-        res.status(400).json({ error: 'Error creating order' })
+        res.status(400).json({ error: 'Error creating physical sale' })
       }
     } catch (error) {
       res.status(500).json({ error: error.message })
@@ -81,10 +82,10 @@ export class OrdersController {
     adminMiddleware(req, res)
     try {
       const { id } = req.params
-      const order = await this.ordersModel.getById({ id })
+      const sale = await this.physicalSalesModel.getById({ id })
 
-      if (!order) {
-        return res.status(404).json({ error: 'Order not found' })
+      if (!sale) {
+        return res.status(404).json({ error: 'Physical sale not found' })
       }
 
       const customers = await this.customersModel.getAll()
@@ -92,8 +93,8 @@ export class OrdersController {
       const products = await this.menuModel.getAll()
       const combos = await this.comboOffersModel.getAll()
 
-      res.render('orders/orders-edit', {
-        order,
+      res.render('physical-sales/physical-sales-edit', {
+        sale,
         customers,
         branches,
         products,
@@ -105,6 +106,7 @@ export class OrdersController {
   }
 
   update = async (req, res) => {
+    adminMiddleware(req, res)
     try {
       const { id } = req.params
 
@@ -118,7 +120,7 @@ export class OrdersController {
       // Convert price to number
       input.total_price = Number(input.total_price)
 
-      const validation = validatePartialOrder(input)
+      const validation = validatePartialPhysicalSale(input)
 
       if (!validation.success) {
         const errors = validation.error.errors.map(error => ({
@@ -129,12 +131,12 @@ export class OrdersController {
         return res.status(400).json({ errors })
       }
 
-      const result = await this.ordersModel.update({ id, input: validation.data })
+      const result = await this.physicalSalesModel.update({ id, input: validation.data })
 
       if (result) {
-        res.redirect('/orders')
+        res.redirect('/physical-sales')
       } else {
-        res.status(404).json({ error: 'Order not found' })
+        res.status(404).json({ error: 'Physical sale not found' })
       }
     } catch (error) {
       res.status(500).json({ error: error.message })
@@ -142,14 +144,15 @@ export class OrdersController {
   }
 
   delete = async (req, res) => {
+    adminMiddleware(req, res)
     try {
       const { id } = req.params
-      const result = await this.ordersModel.delete({ id })
+      const result = await this.physicalSalesModel.delete({ id })
 
       if (result) {
-        res.status(200).json({ message: 'Order deleted successfully' })
+        res.status(200).json({ message: 'Physical sale deleted successfully' })
       } else {
-        res.status(404).json({ error: 'Order not found' })
+        res.status(404).json({ error: 'Physical sale not found' })
       }
     } catch (error) {
       res.status(500).json({ error: error.message })

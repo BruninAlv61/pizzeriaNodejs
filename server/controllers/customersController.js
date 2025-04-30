@@ -1,4 +1,5 @@
 import { validateCustomer, validatePartialCustomer } from '../schemas/customersSchema.js'
+import { adminMiddleware } from '../middlewares/adminMiddleware.js'
 
 export class CustomersController {
   constructor ({ customersModel }) {
@@ -6,6 +7,7 @@ export class CustomersController {
   }
 
   getAll = async (req, res) => {
+    adminMiddleware(req, res)
     try {
       const customers = await this.customersModel.getAll()
       res.render('customers/customers', { customers })
@@ -44,6 +46,7 @@ export class CustomersController {
   }
 
   renderEditForm = async (req, res) => {
+    adminMiddleware(req, res)
     try {
       const { id } = req.params
       const customer = await this.customersModel.getById({ id })

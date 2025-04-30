@@ -18,6 +18,7 @@ import comboOffersRoutes from './routes/combo-offers.routes.js'
 import branchesRoutes from './routes/branches.routes.js'
 import customersRoutes from './routes/customers.routes.js'
 import orderRoutes from './routes/orders.routes.js'
+import physicalSalesRoutes from './routes/physical-sales.routes.js'
 
 dotenv.config()
 
@@ -50,7 +51,8 @@ app.engine(
       json: function (context) {
         return JSON.stringify(context)
       },
-      eq: (a, b) => a === b
+      eq: (a, b) => a === b,
+      not: (value) => !value
     }
   })
 )
@@ -67,6 +69,7 @@ app.use('/combo-offers', comboOffersRoutes)
 app.use('/branches', branchesRoutes)
 app.use('/customers', customersRoutes)
 app.use('/orders', orderRoutes)
+app.use('/physical-sales', physicalSalesRoutes)
 
 app.get('/', (req, res) => {
   const { user } = req.session
