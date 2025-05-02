@@ -19,6 +19,7 @@ import branchesRoutes from './routes/branches.routes.js'
 import customersRoutes from './routes/customers.routes.js'
 import orderRoutes from './routes/orders.routes.js'
 import physicalSalesRoutes from './routes/physical-sales.routes.js'
+import employeeRoutes from './routes/employee.routes.js'
 
 dotenv.config()
 
@@ -70,13 +71,38 @@ app.use('/branches', branchesRoutes)
 app.use('/customers', customersRoutes)
 app.use('/orders', orderRoutes)
 app.use('/physical-sales', physicalSalesRoutes)
+app.use('/employee', employeeRoutes)
 
 app.get('/', (req, res) => {
-  const { user } = req.session
+  const { user } = req
+
   if (!user) {
+    return res.render('initial-page/initial-page')
+  }
+
+  if (user.type === 'admin') {
+    return res.redirect('/admin-panel')
+  } else if (user.type === 'employee') {
+    return res.redirect('/employee-panel')
+  }
+
+  res.render('initial-page/initial-page')
+})
+
+app.get('/admin-panel', (req, res) => {
+  const { user } = req.session
+  if (!user || user.type !== 'admin') {
     return res.redirect('/login')
   }
-  res.render('admin-panel/admin-panel', { user, currentPath: req.path })
+  res.render('admin-panel/admin-panel', { user })
+})
+
+app.get('/employee-panel', (req, res) => {
+  const { user } = req.session
+  if (!user || user.type !== 'employee') {
+    return res.redirect('/employee/login')
+  }
+  res.render('employees/employee-panel', { employee: user })
 })
 
 // Public files

@@ -1,0 +1,19 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/admin-panel.css" />
+{{/contentFor}}
+
+<main class="admin-mainContainer">
+  <article>
+    <section class="admin-mainContainer-textContainer">
+      <h1 class="admin-mainContainer-title">Hello,
+        <span class="admin-mainContainer-userName">{{employee.name}}</span>!
+      </h1>
+      <h2 class="admin-mainContainer-subTitle">Welcome to the employee panel</h2>
+    </section>
+
+    <p class="admin-mainContainer-text">What would you like to manage?</p>
+    <a class="admin-mainContainer-anchor" href="/employee/orders">Orders</a>
+    <a class="admin-mainContainer-anchor" href="/employee/physical-sales">Physical Sales</a>
+  </article>
+
+</main>

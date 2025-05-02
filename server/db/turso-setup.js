@@ -114,3 +114,17 @@ await db.execute(`
     FOREIGN KEY (combo_offers_id) REFERENCES combo_offers(combo_offers_id)
   )
 `)
+
+await db.execute(`
+  CREATE TABLE IF NOT EXISTS employees (
+    employee_id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    lastname TEXT NOT NULL,
+    password TEXT NOT NULL,
+    phone_number TEXT NOT NULL,
+    address TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    employee_branch TEXT NOT NULL,
+    FOREIGN KEY (employee_branch) REFERENCES branches(branch_id)
+  )
+`)

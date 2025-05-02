@@ -1,0 +1,48 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/login.css" />
+{{/contentFor}}
+
+<main class="loginMain">
+  <h1 class="loginMain-tittle">Employee Login</h1>
+
+  <form class="loginMain-form" action="/employee/login" method="POST" id="loginForm">
+    <!-- Campo único visible -->
+    <label for="login_field">Username or e‑mail</label>
+    <input
+      type="text"
+      id="login_field"
+      placeholder="Enter your username or e‑mail"
+      autocomplete="off"
+      required
+    />
+
+    <!-- Hidden inputs que el JS rellenará -->
+    <input type="hidden" name="name" id="name" />
+    <input type="hidden" name="email" id="email" />
+
+    <label for="password">Password</label>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      placeholder="Enter your password"
+      autocomplete="off"
+      required
+    />
+
+    <button type="submit">Sign In</button>
+    <a href="/employee/register">Create an employee account</a>
+    <a href="/login">Admin login</a>
+  </form>
+</main>
+
+<script>
+  /*  Copia el valor del campo visible a name
+      y, si parece un correo, también a email  */
+  document.getElementById('loginForm').addEventListener('submit', (e) => {
+    const value = document.getElementById('login_field').value.trim()
+
+    document.getElementById('name').value = value
+    document.getElementById('email').value = value.includes('@') ? value : ''
+  })
+</script>

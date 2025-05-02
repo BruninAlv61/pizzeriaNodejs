@@ -21,7 +21,7 @@ export class AdminController {
       admin_name: admin.admin_name
     })
 
-    res.redirect('/')
+    res.redirect('/admin-panel')
   }
 
   /* --------- REGISTER -------- */
@@ -37,6 +37,6 @@ export class AdminController {
       admin_name: created.admin_name
     })
 
-    res.redirect('/')
+    res.redirect('/admin-panel')
   }
 }
