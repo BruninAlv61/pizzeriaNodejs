@@ -3,8 +3,9 @@ import { employeeSchema, employeeRegisterSchema } from '../schemas/employee.js'
 import { setEmployeeAuthCookie } from '../jwt/auth.js'
 
 export class EmployeeController {
-  constructor ({ employeeModel }) {
+  constructor ({ employeeModel, ordersModel }) {
     this.employeeModel = employeeModel
+    this.ordersModel = ordersModel
   }
 
   /* ---------- LOGIN ---------- */
@@ -40,5 +41,46 @@ export class EmployeeController {
     })
 
     res.redirect('/employee-panel')
+  }
+
+  renderOrders = async (req, res) => {
+    const { user } = req.session
+    if (!user) return res.status(401).json({ message: 'Unauthorized' })
+
+    const { employee_branch } = user
+    if (!employee_branch) return res.status(400).json({ message: 'Branch not found' })
+
+    console.log('Employee branch:', employee_branch)
+
+    // Obtener órdenes del día actual para esta sucursal
+    const orders = await this.ordersModel.getByBranchId({ branch_id: employee_branch })
+
+    // Formatear la fecha y hora para mejor visualización
+    orders.forEach(order => {
+      const date = new Date(order.created_at)
+      order.formattedDate = date.toLocaleString()
+    })
+
+    res.render('employees/orders', { orders })
+  }
+
+  updateOrderStatus = async (req, res) => {
+    const { id } = req.params
+    const { status } = req.body
+
+    if (!id || !status) {
+      return res.status(400).json({ message: 'Missing order id or status' })
+    }
+
+    const updated = await this.ordersModel.updateOrderStatus({
+      order_id: id,
+      order_status: status
+    })
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Order not found or not updated' })
+    }
+
+    res.json({ success: true })
   }
 }

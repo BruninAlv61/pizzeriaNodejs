@@ -1,0 +1,266 @@
+{{#contentFor "styles"}}
+  <link rel="stylesheet" href="/css/manage-table.css">
+  <style>
+    .order-container {
+      margin-bottom: 20px;
+    }
+    
+    .order-card {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 15px;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .order-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    
+    .order-details {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    
+    .order-info {
+      flex: 1;
+      min-width: 250px;
+    }
+    
+    .order-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .status-select {
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+    
+    .toggle-details {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .toggle-details:hover {
+      background-color: #357ab8;
+    }
+    
+    .order-content {
+      display: none;
+      background-color: white;
+      border-radius: 6px;
+      padding: 15px;
+      margin-top: 10px;
+    }
+    
+    .order-content.active {
+      display: block;
+    }
+    
+    .items-list {
+      margin-top: 15px;
+    }
+    
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .item-name {
+      flex: 2;
+    }
+    
+    .item-quantity, .item-price {
+      flex: 1;
+      text-align: right;
+    }
+    
+    .order-total {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: right;
+    }
+    
+    .status-pending {
+      color: #ff9800;
+      font-weight: bold;
+    }
+    
+    .status-processing {
+      color: #2196F3;
+      font-weight: bold;
+    }
+    
+    .status-completed {
+      color: #4CAF50;
+      font-weight: bold;
+    }
+    
+    .status-cancelled {
+      color: #f44336;
+      font-weight: bold;
+    }
+    
+    .no-orders {
+      text-align: center;
+      padding: 30px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+  </style>
+{{/contentFor}}
+
+<main class="main">
+  <h1>Órdenes del día</h1>
+  
+  {{#if orders.length}}
+    <div class="order-container">
+      {{#each orders}}
+        <div class="order-card" data-id="{{order_id}}">
+          <div class="order-header">
+            <h3>Orden #{{order_id}}</h3>
+            <span class="status-{{order_status}}">{{order_status}}</span>
+          </div>
+          
+          <div class="order-details">
+            <div class="order-info">
+              <p><strong>Cliente:</strong> {{customer_name}} {{customer_lastname}}</p>
+              <p><strong>Total:</strong> ${{total_price}}</p>
+              <p><strong>Fecha:</strong> {{formattedDate}}</p>
+            </div>
+            
+            <div class="order-actions">
+              <select class="status-select" data-id="{{order_id}}">
+                <option value="pending" {{#if (eq order_status "pending")}}selected{{/if}}>Pendiente</option>
+                <option value="processing" {{#if (eq order_status "processing")}}selected{{/if}}>En proceso</option>
+                <option value="completed" {{#if (eq order_status "completed")}}selected{{/if}}>Completado</option>
+                <option value="cancelled" {{#if (eq order_status "cancelled")}}selected{{/if}}>Cancelado</option>
+              </select>
+              
+              <button class="toggle-details" data-target="content-{{order_id}}">
+                Ver detalles
+              </button>
+            </div>
+          </div>
+          
+          <div id="content-{{order_id}}" class="order-content">
+            <h4>Detalles de la orden</h4>
+            
+            <div class="items-list">
+              <div class="item-row">
+                <div class="item-name"><strong>Producto</strong></div>
+                <div class="item-quantity"><strong>Cantidad</strong></div>
+                <div class="item-price"><strong>Precio</strong></div>
+              </div>
+              
+              {{#each items}}
+                <div class="item-row">
+                  <div class="item-name">{{item_name}}</div>
+                  <div class="item-quantity">{{quantity}}</div>
+                  <div class="item-price">${{price}}</div>
+                </div>
+              {{/each}}
+            </div>
+            
+            <div class="order-total">
+              Total: ${{total_price}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="no-orders">
+      <h3>No hay órdenes para hoy</h3>
+      <p>Cuando recibas nuevas órdenes, aparecerán aquí.</p>
+    </div>
+  {{/if}}
+</main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Manejar la visibilidad de los detalles
+    const toggleButtons = document.querySelectorAll('.toggle-details');
+    toggleButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const targetContent = document.getElementById(targetId);
+        
+        // Toggle de la clase active
+        if (targetContent.classList.contains('active')) {
+          targetContent.classList.remove('active');
+          this.textContent = 'Ver detalles';
+        } else {
+          targetContent.classList.add('active');
+          this.textContent = 'Ocultar detalles';
+        }
+      });
+    });
+    
+    // Manejar cambios en el estado de la orden
+    const statusSelects = document.querySelectorAll('.status-select');
+    statusSelects.forEach(select => {
+      select.addEventListener('change', async function() {
+        const orderId = this.getAttribute('data-id');
+        const newStatus = this.value;
+        
+        try {
+          const response = await fetch(`/employee/orders/${orderId}/status`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: newStatus })
+          });
+          
+          if (response.ok) {
+            // Actualizar la etiqueta de estado visualmente
+            const orderCard = document.querySelector(`.order-card[data-id="${orderId}"]`);
+            const statusElement = orderCard.querySelector('[class^="status-"]');
+            
+            // Eliminar la clase de estado anterior
+            statusElement.className = '';
+            
+            // Agregar la nueva clase de estado
+            statusElement.classList.add(`status-${newStatus}`);
+            
+            // Actualizar el texto
+            statusElement.textContent = newStatus;
+            
+            // Opcional: mostrar alguna notificación de éxito
+            console.log('Estado actualizado correctamente');
+          } else {
+            console.error('Error al actualizar el estado');
+            // Revertir el select a su valor anterior
+            const data = await response.json();
+            alert(`Error: ${data.message || 'No se pudo actualizar el estado'}`);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Error al conectar con el servidor');
+        }
+      });
+    });
+  });
+</script>

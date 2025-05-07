@@ -2,10 +2,11 @@ import express from 'express'
 import { EmployeeController } from '../controllers/employeeController.js'
 import { EmployeeModel } from '../models/employeeModel.js'
 import { BranchesModel } from '../models/branchesModel.js' // Import BranchModel
+import { OrdersModel } from '../models/ordersModel.js'
 
 const router = express.Router()
 
-const employeeController = new EmployeeController({ employeeModel: EmployeeModel })
+const employeeController = new EmployeeController({ employeeModel: EmployeeModel, ordersModel: OrdersModel })
 
 // Rutas de autenticación para empleados
 router.get('/login', (req, res) => {
@@ -32,5 +33,13 @@ router.get('/register', async (req, res) => {
 })
 
 router.post('/register', employeeController.register)
+
+router.get('/physical-sales', (req, res) => {
+  res.render('employees/physical-sales')
+})
+
+router.get('/orders', employeeController.renderOrders)
+
+router.put('/orders/:id/status', employeeController.updateOrderStatus)
 
 export default router
