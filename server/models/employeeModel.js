@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto'
 import bcrypt from 'bcrypt'
 import { db } from '../db/connection-turso.js'
 import { SALT_ROUNDS } from '../config.js'
+import { PhysicalSalesModel } from './physicalSalesModel.js'
 
 const saltRounds = Number(SALT_ROUNDS)
 
@@ -78,6 +79,71 @@ export class EmployeeModel {
     } catch (err) {
       console.error('❌ EmployeeModel.register:', err.message)
       return null
+    }
+  }
+
+  static async createPhysicalSale ({ input }) {
+    const {
+      customer_id,
+      customer_phone,
+      branch_id,
+      total_price,
+      payment_method,
+      items
+    } = input
+
+    const physical_sales_id = randomUUID()
+    const sale_date = new Date().toISOString()
+
+    try {
+      // Insert physical sale
+      await db.execute({
+        sql: `
+          INSERT INTO physical_sales (
+            physical_sales_id, customer_id, sale_date, total_price, 
+            payment_method, customer_phone, branch_id
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `,
+        args: [
+          physical_sales_id,
+          customer_id || null,
+          sale_date,
+          total_price,
+          payment_method,
+          customer_phone || null,
+          branch_id
+        ]
+      })
+
+      // Insert items
+      for (const item of items) {
+        const sales_item_id = randomUUID()
+        const isProduct = item.type === 'product'
+
+        await db.execute({
+          sql: `
+            INSERT INTO sales_items (
+              sales_item_id, physical_sale_id, product_id, combo_offers_id, 
+              quantity, price
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+          `,
+          args: [
+            sales_item_id,
+            physical_sales_id,
+            isProduct ? item.id : null,
+            !isProduct ? item.id : null,
+            item.quantity,
+            item.price
+          ]
+        })
+      }
+
+      const sale = await PhysicalSalesModel.getById({ id: physical_sales_id })
+      return sale
+    } catch (e) {
+      throw new Error('Error creating physical sale: ' + e.message)
     }
   }
 }

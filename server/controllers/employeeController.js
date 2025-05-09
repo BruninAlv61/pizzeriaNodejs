@@ -1,11 +1,16 @@
 // server/controllers/employeeController.js
 import { employeeSchema, employeeRegisterSchema } from '../schemas/employee.js'
 import { setEmployeeAuthCookie } from '../jwt/auth.js'
+import { validatePhysicalSale } from '../schemas/physicalSalesSchema.js'
 
 export class EmployeeController {
-  constructor ({ employeeModel, ordersModel }) {
+  constructor ({ employeeModel, ordersModel, customersModel, menuModel, comboOffersModel, physicalSalesModel }) {
     this.employeeModel = employeeModel
     this.ordersModel = ordersModel
+    this.customersModel = customersModel
+    this.menuModel = menuModel
+    this.comboOffersModel = comboOffersModel
+    this.physicalSalesModel = physicalSalesModel
   }
 
   /* ---------- LOGIN ---------- */
@@ -82,5 +87,125 @@ export class EmployeeController {
     }
 
     res.json({ success: true })
+  }
+
+  renderPhysicalSales = async (req, res) => {
+    const { user } = req.session
+    if (!user) return res.status(401).json({ message: 'Unauthorized' })
+
+    try {
+      // Get all physical sales
+      const allSales = await this.physicalSalesModel.getAll()
+
+      // Filter sales to show only today's sales
+      const today = new Date()
+      today.setHours(0, 0, 0, 0) // Start of today
+
+      const sales = allSales.filter(sale => {
+        const saleDate = new Date(sale.sale_date)
+        saleDate.setHours(0, 0, 0, 0) // Remove time part for comparison
+        return saleDate.getTime() === today.getTime()
+      })
+
+      // Format dates for better visualization
+      sales.forEach(sale => {
+        if (sale.sale_date) {
+          const date = new Date(sale.sale_date)
+          sale.sale_date = date.toLocaleString()
+        }
+      })
+
+      res.render('employees/physical-sales', {
+        sales,
+        todayDate: today.toLocaleDateString()
+      })
+    } catch (error) {
+      console.error('Error fetching physical sales:', error)
+      res.render('employees/physical-sales', {
+        sales: [],
+        error: 'Error loading physical sales. Please try again later.'
+      })
+    }
+  }
+
+  renderAddPhysicalSale = async (req, res) => {
+    const { user } = req.session
+    if (!user) return res.status(401).json({ message: 'Unauthorized' })
+
+    try {
+      const customers = await this.customersModel.getAll()
+      const products = await this.menuModel.getAll()
+      const combos = await this.comboOffersModel.getAll()
+
+      res.render('employees/physical-sales-add', {
+        customers,
+        products,
+        combos,
+        user
+      })
+    } catch (error) {
+      res.status(500).json({ error: error.message })
+    }
+  }
+
+  createPhysicalSale = async (req, res) => {
+    const { user } = req.session
+    if (!user) return res.status(401).json({ message: 'Unauthorized' })
+
+    try {
+      // Parse items from JSON string
+      const input = { ...req.body }
+
+      console.log(input)
+
+      if (typeof input.items === 'string') {
+        input.items = JSON.parse(input.items)
+      }
+
+      // Convert price to number
+      input.total_price = Number(input.total_price)
+
+      // Add sale_date
+      input.sale_date = new Date().toISOString()
+
+      const validation = validatePhysicalSale(input)
+
+      if (!validation.success) {
+        const errors = validation.error.errors.map(error => ({
+          field: error.path.join('.'),
+          message: error.message
+        }))
+
+        return res.status(400).json({ errors })
+      }
+
+      const result = await this.employeeModel.createPhysicalSale({ input: validation.data })
+      if (result) {
+        res.redirect('/employee/physical-sales')
+      } else {
+        res.status(400).json({ error: 'Error creating physical sale' })
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message })
+    }
+  }
+
+  deletePhysicalSale = async (req, res) => {
+    const { id } = req.params
+    const { user } = req.session
+
+    if (!user) return res.status(401).json({ message: 'Unauthorized' })
+
+    try {
+      const deleted = await this.physicalSalesModel.delete({ id })
+
+      if (deleted) {
+        res.json({ success: true })
+      } else {
+        res.status(404).json({ error: 'Sale not found or could not be deleted' })
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message })
+    }
   }
 }
