@@ -17,6 +17,8 @@ export class CustomersController {
   }
 
   create = async (req, res) => {
+    const { user } = req.session
+
     const validation = validateCustomer(req.body)
 
     if (!validation.success) {
@@ -32,11 +34,9 @@ export class CustomersController {
     try {
       const result = await this.customersModel.create({ input: validation.data })
 
-      if (result) {
-        res.redirect('/customers')
-      } else {
-        res.status(400).json({ error: 'Error creating customer' })
-      }
+      if (!result) res.status(400).json({ error: 'Error creating customer' })
+
+      if (user.type === 'admin') res.redirect('/customers')
     } catch (error) {
       if (error.message.includes('UNIQUE constraint failed')) {
         return res.status(409).json({ error: 'Email already exists' })
