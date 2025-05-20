@@ -5,5 +5,6 @@ export const {
   PORT = 3000,
   SECRET_JWT_KEY,
   EMPLOYEE_SECRET_JWT_KEY,
+  CUSTOMER_SECRET_JWT_KEY,
   SALT_ROUNDS
 } = process.env

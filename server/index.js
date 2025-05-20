@@ -28,8 +28,9 @@ const app = express()
 // Middlewares
 app.use(express.json())
 app.use(cors({
-  origin: 'http://localhost:3008',
-  credentials: true
+  origin: 'http://localhost:5173',
+  credentials: true,
+  exposedHeaders: ['set-cookie']
 }))
 app.use(morgan('dev'))
 app.use(express.urlencoded({ extended: true }))

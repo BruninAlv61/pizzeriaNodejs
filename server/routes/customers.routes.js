@@ -15,4 +15,6 @@ router.get('/edit/:id', customersController.renderEditForm)
 router.patch('/:id', customersController.update)
 router.delete('/:id', customersController.delete)
 
+router.get('/check-session', customersController.checkSession)
+
 export default router
